@@ -1,0 +1,30 @@
+html.wp-toolbar body.mailerglue-no-wp-ui {
+	margin-top: -32px;
+}
+
+body.mailerglue-no-wp-ui {
+
+	#wpadminbar,
+	#adminmenuback,
+	#adminmenuwrap,
+	#wpfooter,
+	.notice {
+		display: none !important;
+	}
+
+	#wpcontent,
+	#wpfooter {
+		margin: 0;
+	}
+
+	#wpcontent,
+	#wpbody-content {
+		padding: 0;
+		float: none;
+	}
+
+	#mailerglue-onboarding {
+		padding: 0 0 1px;
+	}
+
+}

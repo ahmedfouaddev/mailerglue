@@ -1,0 +1,1 @@
+import './css/wp-no-ui.scss';

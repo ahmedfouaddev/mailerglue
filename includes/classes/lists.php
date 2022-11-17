@@ -1,58 +1,49 @@
 <?php
-/**
- * Lists.
- */
 
 namespace MailerGlue;
 
 // Exit if accessed directly.
-if (!defined('ABSPATH')) {
-    exit;
-}
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Lists class.
  */
-class Lists
-{
+class Lists {
 
-    private $tablePrefix;
-    private $tableName;
+	private $prefix;
+	private $table;
 
-    /**
-     * Construct.
-     */
-    public function __construct()
-    {
-        global $wpdb;
+	/**
+	 * Construct.
+	 */
+	public function __construct() {
+		global $wpdb;
 
-        $this->tablePrefix = $wpdb->prefix . 'mailerglue_';
-        $this->tableName   = $this->tablePrefix . 'lists';
-    }
+		$this->prefix = $wpdb->prefix . 'mailerglue_';
+		$this->table  = $this->prefix . 'lists';
+	}
 
-    /**
-     * Add a list.
-     */
-    public function addList($args = array())
-    {
-        global $wpdb;
+	/**
+	 * Add a list.
+	 */
+	public function add_list( $args = array() ) {
+		global $wpdb;
 
-        $name = !empty($args['name']) ? $args['name'] : '';
+		$name = ! empty( $args[ 'name' ] ) ? $args[ 'name' ] : '';
 
-        $wpdb->insert($this->tableName, array(
-            'name'          => $name,
-            'create_time'   => current_time('mysql', 1),
-        ));
-    }
+		$wpdb->insert( $this->table, array(
+			'name'			=> $name,
+			'create_time'	=> current_time( 'mysql', 1 ),
+		) );
+	}
 
-    /**
-     * Remove a list.
-     */
-    public function removeList($listID = 0)
-    {
-        global $wpdb;
+	/**
+	 * Remove a list.
+	 */
+	public function remove_list( $list_id = 0 ) {
+		global $wpdb;
 
-        $wpdb->delete($this->tableName, array('list_id' => $listID));
-    }
+		$wpdb->delete( $this->table, array( 'list_id' => $list_id ) );
+	}
 
 }

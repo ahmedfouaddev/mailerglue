@@ -1,0 +1,28 @@
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/css/wp-no-ui.scss ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+html.wp-toolbar body.mailerglue-no-wp-ui {
+  margin-top: -32px;
+}
+
+body.mailerglue-no-wp-ui #wpadminbar,
+body.mailerglue-no-wp-ui #adminmenuback,
+body.mailerglue-no-wp-ui #adminmenuwrap,
+body.mailerglue-no-wp-ui #wpfooter,
+body.mailerglue-no-wp-ui .notice {
+  display: none !important;
+}
+body.mailerglue-no-wp-ui #wpcontent,
+body.mailerglue-no-wp-ui #wpfooter {
+  margin: 0;
+}
+body.mailerglue-no-wp-ui #wpcontent,
+body.mailerglue-no-wp-ui #wpbody-content {
+  padding: 0;
+  float: none;
+}
+body.mailerglue-no-wp-ui #mailerglue-onboarding {
+  padding: 0 0 1px;
+}
+
+/*# sourceMappingURL=index.css.map*/
