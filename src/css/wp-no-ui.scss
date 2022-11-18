@@ -4,6 +4,8 @@ html.wp-toolbar body.mailerglue-no-wp-ui {
 
 body.mailerglue-no-wp-ui {
 
+	background: #fff;
+
 	#wpadminbar,
 	#adminmenuback,
 	#adminmenuwrap,
@@ -24,7 +26,20 @@ body.mailerglue-no-wp-ui {
 	}
 
 	#mailerglue-onboarding {
-		padding: 0 0 1px;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	#wpwrap {
+		display: flex;
+		flex-direction: column;
+		height: calc(100% + 32px);
+	}
+
+	#wpbody,
+	#wpbody-content {
+		height: 100%;
 	}
 
 }

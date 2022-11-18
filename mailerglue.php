@@ -102,7 +102,7 @@ final class MailerGlue {
 
 		// Remote App URL.
 		if ( ! defined( 'MAILERGLUE_REMOTE_APP' ) ) {
-			define( 'MAILERGLUE_REMOTE_APP', 'http://localhost/app/' );
+			define( 'MAILERGLUE_REMOTE_APP', 'http://localhost/app/wp-json/v1' );
 		}
 
 	}
@@ -122,6 +122,7 @@ final class MailerGlue {
 
 		$this->options = new MailerGlue\Options;
 		$this->install = new MailerGlue\Install;
+		$this->api		= new MailerGlue\API();
 
 		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 			$this->admin_menus 		= new MailerGlue\Admin\Menus;

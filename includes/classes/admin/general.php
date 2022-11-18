@@ -26,6 +26,10 @@ class General {
 
 		$page = isset( $_GET[ 'page' ] ) ? sanitize_text_field( $_GET[ 'page' ] ) : '';
 
+		if ( $page && strstr( $page, 'mailerglue' ) ) {
+			$classes .= ' mailerglue-admin';
+		}
+
 		if ( $page && in_array( $page, array( 'mailerglue-onboarding' ) ) ) {
 			$classes .= ' mailerglue-no-wp-ui';
 		}

@@ -47,7 +47,9 @@ class Onboarding {
 	 * Show onboarding content.
 	 */
 	public function output() {
-		echo 'hey';
+		?>
+		<div id="mailerglue-onboarding"></div>
+		<?php
 	}
 
 }
