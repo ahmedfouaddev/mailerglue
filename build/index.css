@@ -1,3 +1,10 @@
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/css/theme.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+:root {
+  --mailerglue-primary-lighter-10: #596e95;
+  --mailerglue-primary: #45587a;
+}
 /*!**********************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/css/wp-no-ui.scss ***!
   \**********************************************************************************************************************************************************************************************************************************************/
@@ -43,10 +50,7 @@ body.mailerglue-no-wp-ui #wpbody-content {
   \*******************************************************************************************************************************************************************************************************************************************/
 .mailerglue-admin .mailerglue-primary-bar {
   min-height: 60px;
-  background: #45587a;
-}
-.mailerglue-admin .mailerglue-text-regular {
-  font-weight: 400 !important;
+  background: var(--mailerglue-primary);
 }
 .mailerglue-admin .components-panel__row {
   padding: 10px 0;
@@ -79,9 +83,51 @@ body.mailerglue-no-wp-ui #wpbody-content {
   padding: 12px 14px;
   font-size: 14px;
 }
-.mailerglue-admin h4, .mailerglue-admin h2 {
+.mailerglue-admin .mailerglue-setup {
+  margin: 0 auto;
+  max-width: 500px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.mailerglue-admin .mailerglue-bottom {
+  margin: 0 auto;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.mailerglue-admin .components-notice {
+  margin: 0 0 20px;
+  padding: 10px 14px;
+  border-radius: 3px;
+  border: none;
+}
+.mailerglue-admin .components-notice .components-notice__content {
+  margin: 0;
+}
+.mailerglue-admin .components-notice p {
+  padding: 0;
+}
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/css/typography.scss ***!
+  \************************************************************************************************************************************************************************************************************************************************/
+.mailerglue-admin h2, .mailerglue-admin h4, .mailerglue-admin h5 {
   margin: 0;
   padding: 4px 0;
+}
+.mailerglue-admin h2 {
+  font-weight: bold;
+}
+.mailerglue-admin h5 {
+  opacity: 0.7;
 }
 .mailerglue-admin p {
   margin: 0;
@@ -91,50 +137,46 @@ body.mailerglue-no-wp-ui #wpbody-content {
 .mailerglue-admin p.mailerglue-text-bigger {
   font-size: 15px;
 }
-.mailerglue-admin .mailerglue-setup {
-  margin: 0 auto;
-  max-width: 500px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px;
-}
-.mailerglue-admin .mailerglue-bottom {
-  margin: 0 auto;
-  max-width: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 60px;
-}
-.mailerglue-admin .components-notice {
-  margin: 0 0 20px;
-  padding: 10px 14px;
-  border-radius: 3px;
-  border: none;
-}
-.mailerglue-admin .components-notice.is-error {
-  background: #fef08a;
-  color: #a16207;
-}
-.mailerglue-admin .components-notice .components-notice__content {
-  margin: 0;
-}
-.mailerglue-admin .components-notice p {
-  padding: 0;
+.mailerglue-admin .mailerglue-text-regular {
+  font-weight: 400 !important;
 }
 /*!*******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/css/links.scss ***!
   \*******************************************************************************************************************************************************************************************************************************************/
-.mailerglue-link-muted {
+.mailerglue-admin a {
+  color: var(--mailerglue-primary-lighter-10);
+}
+.mailerglue-admin a:hover, .mailerglue-admin a:focus {
+  color: var(--mailerglue-primary);
+}
+.mailerglue-admin a.mailerglue-link-muted {
   color: #999;
 }
-.mailerglue-link-muted:hover {
+.mailerglue-admin a.mailerglue-link-muted:hover {
   color: #666;
 }
-.mailerglue-link-muted:focus {
+.mailerglue-admin a.mailerglue-link-muted:focus {
   color: #666;
+}
+.mailerglue-admin .components-button.is-primary {
+  background: var(--mailerglue-primary-lighter-10);
+}
+.mailerglue-admin .components-button.is-primary:hover:not(:disabled) {
+  background: var(--mailerglue-primary);
+}
+.mailerglue-admin .components-button.is-primary:active:not(:disabled) {
+  background: var(--mailerglue-primary);
+}
+.mailerglue-admin .components-button.is-primary:focus:not(:disabled) {
+  box-shadow: none;
+}
+.mailerglue-admin .components-button.is-primary:not([aria-disabled=true]):active {
+  color: rgba(255, 255, 255, 0.4);
+}
+.mailerglue-admin .components-button.is-primary.is-busy, .mailerglue-admin .components-button.is-primary.is-busy:disabled, .mailerglue-admin .components-button.is-primary.is-busy[aria-disabled=true] {
+  background-image: linear-gradient(-45deg, var(--mailerglue-primary-lighter-10) 33%, var(--mailerglue-primary) 33%, var(--mailerglue-primary) 70%, var(--mailerglue-primary-lighter-10) 70%);
+  border-color: var(--mailerglue-primary-lighter-10);
+  color: #fff;
 }
 
 /*# sourceMappingURL=index.css.map*/

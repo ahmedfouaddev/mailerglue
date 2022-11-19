@@ -47,7 +47,9 @@ class Verify_Login {
 
 		// If successful, save access token.
 		if ( ! empty( $response[ 'success' ] ) ) {
-			
+
+			$options = new \MailerGlue\Options;
+			$options->update( 'access_token', $response );
 		}
 
 		return rest_ensure_response( $response );

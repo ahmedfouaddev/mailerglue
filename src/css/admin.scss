@@ -2,11 +2,7 @@
 
 	.mailerglue-primary-bar {
 		min-height: 60px;
-		background: #45587a;
-	}
-
-	.mailerglue-text-regular {
-		font-weight: 400 !important;
+		background: var(--mailerglue-primary);
 	}
 
 	.components-panel__row {
@@ -45,21 +41,6 @@
 		}
 	}
 
-	h4, h2 {
-		margin: 0;
-		padding: 4px 0;
-	}
-
-	p {
-		margin: 0;
-		padding: 15px 0;
-		font-size: 14px;
-	}
-
-	p.mailerglue-text-bigger {
-		font-size: 15px;
-	}
-
 	.mailerglue-setup {
 		margin: 0 auto;
 		max-width: 500px;
@@ -68,6 +49,8 @@
 		flex-direction: column;
 		justify-content: center;
 		padding: 60px;
+		width: 100%;
+		box-sizing: border-box;
 	}
 
 	.mailerglue-bottom {
@@ -77,6 +60,8 @@
 		align-items: center;
 		justify-content: center;
 		padding: 60px;
+		width: 100%;
+		box-sizing: border-box;
 	}
 
 	.components-notice {
@@ -84,10 +69,6 @@
 		padding: 10px 14px;
 		border-radius: 3px;
 		border: none;
-		&.is-error {
-			background: #fef08a;
-			color: #a16207;
-		}
 		.components-notice__content {
 			margin: 0;
 		}

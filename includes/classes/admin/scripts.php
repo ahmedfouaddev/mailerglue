@@ -23,7 +23,7 @@ class Scripts {
 	 * Enqueue admin scripts.
 	 */
 	public function admin_enqueue_scripts() {
-		global $current_user;
+		global $current_user, $mailerglue_options;
 
 		$asset_file = include( MAILERGLUE_PLUGIN_DIR . 'build/index.asset.php' );
 
@@ -32,9 +32,12 @@ class Scripts {
 
 		$user = new \MailerGlue\User;
 
+		$options 		= new \MailerGlue\Options;
+
 		$args = array(
 			'admin_first_name'		=> ucfirst( $user->get_first_name() ),
 			'api_url'				=> 'mailerglue/' . MAILERGLUE_API_VERSION,
+			'access_token'			=> $options->get_access_token(),
 		);
 
 		wp_localize_script( 'mailerglue-backend', 'mailerglue_backend', apply_filters( 'mailerglue_backend_args', $args ) );

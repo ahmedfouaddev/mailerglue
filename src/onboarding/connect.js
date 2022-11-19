@@ -15,10 +15,13 @@ import {
 	Notice,
 } from '@wordpress/components';
 
-export const OnboardingConnect = props => {
+import { withRouter } from 'react-router';
 
-	const { admin_first_name } = mailerglue_backend;
+const OnboardingConnect = props => {
 
+	const {admin_first_name, access_token} = mailerglue_backend;
+
+	const [accessToken, setAccessToken] = useState(access_token);
 	const [userEmail, setUserEmail] = useState('');
 	const [userPassword, setUserPassword] = useState('');
 	const [errorMsg, setErrorMsg] = useState('');
@@ -37,12 +40,16 @@ export const OnboardingConnect = props => {
 			},
 		} ).then( response => {
 
-			setIsSending(false);
+			console.log( response );
 
 			if ( ! response.success ) {
+				setIsSending(false);
 				setErrorMsg( response.message );
+				setAccessToken('');
 			} else {
 				setErrorMsg('');
+				setAccessToken( response );
+				props.history.push('/settings');
 			}
 
 		} );
@@ -53,14 +60,14 @@ export const OnboardingConnect = props => {
 		<>
 
 		{ admin_first_name ? 
-			<Heading level={4} className="mailerglue-text-regular">Welcome, { admin_first_name}!</Heading> : 
-			<Heading level={4} className="mailerglue-text-regular">Welcome!</Heading>
+			<Heading level={5} className="mailerglue-text-regular">Welcome, { admin_first_name}!</Heading> : 
+			<Heading level={5} className="mailerglue-text-regular">Welcome!</Heading>
 		}
 
 		<Heading level={2}>Let's begin by connecting your Mailer Glue account</Heading>
 
 		<p className="mailerglue-text-bigger">
-			Enter your Mailer Glue account details below to connect.
+			Don't have an account yet? <a href="#">Sign up</a>
 		</p>
 
 		<Spacer paddingTop={10} marginBottom={0} />
@@ -73,6 +80,7 @@ export const OnboardingConnect = props => {
 		<PanelBody className="mailerglue-panelbody-form">
 			<PanelRow>
 				<InputControl
+					autoFocus
 					placeholder={ __( 'Email address', 'mailerglue' ) }
 					value={ userEmail }
 					onChange={
@@ -99,7 +107,7 @@ export const OnboardingConnect = props => {
 				<Button
 					isPrimary
 					disabled={ ! userEmail || ! userPassword || isSending }
-					isBusy={ false }
+					isBusy={ isSending }
 					onClick={ signInRequest }
 					>
 					{ __( 'Connect your Mailer Glue account', 'mailerglue' ) }
@@ -111,3 +119,5 @@ export const OnboardingConnect = props => {
 	);
 
 }
+
+export default withRouter(OnboardingConnect);

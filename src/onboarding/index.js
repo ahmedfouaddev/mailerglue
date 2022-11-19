@@ -4,8 +4,11 @@ import apiFetch from '@wordpress/api-fetch';
 
 import { render, Component, Fragment, useState, useEffect } from '@wordpress/element';
 
-import { MailerGlueTopBar } from '../top-bar';
-import { OnboardingConnect } from './connect';
+import { HashRouter, Switch, Route, Link, NavLink } from 'react-router-dom';
+
+import MailerGlueTopBar from '../top-bar';
+import OnboardingConnect from './connect';
+import OnboardingLists from './lists';
 
 export const Onboarding = props => {
 
@@ -15,7 +18,14 @@ export const Onboarding = props => {
 		<>
 			<MailerGlueTopBar />
 			<div className="mailerglue-setup">
-				{ step == 1 && <OnboardingConnect /> }
+
+				<HashRouter>
+					<Switch>
+						<Route exact path="/" render={ (props) => <OnboardingConnect setStep={setStep} /> } />
+						<Route exact path="/settings" render={ (props) => <OnboardingLists setStep={setStep} /> } />
+					</Switch>
+				</HashRouter>
+
 			</div>
 			<div className="mailerglue-bottom">
 				<a href="#" className="mailerglue-link-muted">Skip onboarding</a>

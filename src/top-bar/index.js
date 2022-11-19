@@ -4,7 +4,7 @@ import apiFetch from '@wordpress/api-fetch';
 
 import { render, Component, Fragment, useState, useEffect } from '@wordpress/element';
 
-export const MailerGlueTopBar = props => {
+const MailerGlueTopBar = props => {
 
 	return (
 		<>
@@ -15,3 +15,5 @@ export const MailerGlueTopBar = props => {
 	);
 
 }
+
+export default MailerGlueTopBar;

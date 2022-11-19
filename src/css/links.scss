@@ -1,9 +1,43 @@
-.mailerglue-link-muted {
-	color: #999;
-	&:hover {
-		color: #666;
+.mailerglue-admin {
+
+	a {
+		color: var(--mailerglue-primary-lighter-10);
+		&:hover, &:focus {
+			color: var(--mailerglue-primary);
+		}
 	}
-	&:focus {
-		color: #666;
+
+	a.mailerglue-link-muted {
+		color: #999;
+		&:hover {
+			color: #666;
+		}
+		&:focus {
+			color: #666;
+		}
 	}
+
+	.components-button.is-primary {
+		background: var(--mailerglue-primary-lighter-10);
+		&:hover:not(:disabled) {
+			background: var(--mailerglue-primary);
+		}
+		&:active:not(:disabled) {
+			background: var(--mailerglue-primary);
+		}
+		&:focus:not(:disabled) {
+			box-shadow: none;
+		}
+		&:not([aria-disabled=true]):active {
+			color: rgba(255, 255, 255, 0.4);
+		}
+		&.is-busy,
+		&.is-busy:disabled,
+		&.is-busy[aria-disabled=true] {
+			background-image: linear-gradient(-45deg, var(--mailerglue-primary-lighter-10) 33%, var(--mailerglue-primary) 33%, var(--mailerglue-primary) 70%, var(--mailerglue-primary-lighter-10) 70%);
+			border-color: var(--mailerglue-primary-lighter-10);
+			color: #fff;
+		}
+	}
+
 }
