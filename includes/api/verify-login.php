@@ -30,8 +30,12 @@ class Verify_Login {
 
 		$data = json_decode( $request->get_body(), true );
 
-		$email 		= isset( $data[ 'email' ] ) ? $data[ 'email' ] : '';
+		$email 		= isset( $data[ 'email' ] ) ? sanitize_email( $data[ 'email' ] ) : '';
 		$password 	= isset( $data[ 'password' ] ) ? $data[ 'password' ] : '';
+
+		if ( ! is_email( $email ) ) {
+			return new \WP_Error( 'invalid_email', 'Please enter a valid email.' );
+		}
 
 		$args = array(
 			'timeout' => 10,
@@ -49,7 +53,15 @@ class Verify_Login {
 		if ( ! empty( $response[ 'success' ] ) ) {
 
 			$options = new \MailerGlue\Options;
-			$options->update( 'access_token', $response );
+			$options->update( 'data', array( 'access_token' => $response ) );
+
+			if ( ! $options->has_field( 'from_name' ) ) {
+				$options->update( 'data', array( 'from_name' => $response[ 'name' ] ) );
+			}
+
+			if ( ! $options->has_field( 'from_email' ) ) {
+				$options->update( 'data', array( 'from_email' => $response[ 'email' ] ) );
+			}
 		}
 
 		return rest_ensure_response( $response );

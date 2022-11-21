@@ -48,7 +48,7 @@ class Onboarding {
 	 */
 	public function output() {
 		?>
-		<div id="mailerglue-onboarding"></div>
+		<div id="mailerglue-onboarding" class="mailerglue-ui"></div>
 		<?php
 	}
 

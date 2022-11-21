@@ -1,4 +1,4 @@
-.mailerglue-admin {
+.mailerglue-ui {
 
 	.mailerglue-primary-bar {
 		min-height: 60px;
@@ -74,6 +74,9 @@
 		}
 		p {
 			padding: 0;
+		}
+		&.is-error {
+			background-color: #fbeaea;
 		}
 	}
 

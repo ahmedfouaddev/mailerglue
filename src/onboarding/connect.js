@@ -13,79 +13,91 @@ import {
 	PanelRow,
 	Button,
 	Notice,
+	ExternalLink
 } from '@wordpress/components';
 
 import { withRouter } from 'react-router';
 
 const OnboardingConnect = props => {
 
-	const {admin_first_name, access_token} = mailerglue_backend;
-
-	const [accessToken, setAccessToken] = useState(access_token);
-	const [userEmail, setUserEmail] = useState('');
-	const [userPassword, setUserPassword] = useState('');
-	const [errorMsg, setErrorMsg] = useState('');
-	const [isSending, setIsSending] = useState(false);
+	const {state, setState} = props;
+	const {admin_first_name, api_url} = mailerglue_backend;
 
 	const signInRequest = (e) => {
 
-		setIsSending(true);
-
-		apiFetch( {
-			path: mailerglue_backend.api_url + '/verify_login',
-			method: 'post',
-			data: {
-				email: userEmail,
-				password: userPassword,
-			},
-		} ).then( response => {
-
-			console.log( response );
-
-			if ( ! response.success ) {
-				setIsSending(false);
-				setErrorMsg( response.message );
-				setAccessToken('');
-			} else {
-				setErrorMsg('');
-				setAccessToken( response );
-				props.history.push('/settings');
-			}
-
+		setState( prevValues => {
+			return { ...prevValues, sending: true }
 		} );
 
+		apiFetch( {
+			path: api_url + '/verify_login',
+			method: 'post',
+			data: {
+				email: state.email,
+				password: state.password,
+			},
+		} ).then(
+			(response) => {
+				console.log(response);
+				if ( ! response.success ) {
+					setState( prevValues => {
+						return { ...prevValues, sending: false, errors: { login: response.message }, access_token: '' }
+					} );
+				} else {
+					setState( prevValues => {
+						return { ...prevValues, sending: false, errors: { login: '' }, access_token: response, from_name: response.name, from_email: response.email }
+					} );
+
+					props.history.push('/settings');
+				}
+			},
+
+			(error) => {
+				setState( prevValues => {
+					return { ...prevValues, sending: false, errors: { login: error.message }, access_token: '' }
+				} );
+			}
+		);
+
 	};
+
+	useEffect(() => {
+
+	}, []);
 
 	return (
 		<>
 
 		{ admin_first_name ? 
-			<Heading level={5} className="mailerglue-text-regular">Welcome, { admin_first_name}!</Heading> : 
+			<Heading level={5} className="mailerglue-text-regular">Welcome, {admin_first_name}!</Heading> : 
 			<Heading level={5} className="mailerglue-text-regular">Welcome!</Heading>
 		}
 
 		<Heading level={2}>Let's begin by connecting your Mailer Glue account</Heading>
 
 		<p className="mailerglue-text-bigger">
-			Don't have an account yet? <a href="#">Sign up</a>
+			Don't have an account yet? <ExternalLink href="#">Sign up</ExternalLink>
 		</p>
 
 		<Spacer paddingTop={10} marginBottom={0} />
 
-		{ errorMsg &&
+		{ state.errors.login &&
 		<Notice status="error" isDismissible={false}>
-			<p>{ errorMsg }</p>
+			<p>{ state.errors.login }</p>
 		</Notice> }
 
+		<form action="/">
 		<PanelBody className="mailerglue-panelbody-form">
 			<PanelRow>
 				<InputControl
 					autoFocus
 					placeholder={ __( 'Email address', 'mailerglue' ) }
-					value={ userEmail }
+					value={ state.email }
 					onChange={
 						( value ) => {
-							setUserEmail( value );
+							setState( prevValues => {
+								return { ...prevValues, email: value }
+							} );
 						}
 					}
 				/>
@@ -94,10 +106,12 @@ const OnboardingConnect = props => {
 				<InputControl
 					placeholder={ __( 'Password', 'mailerglue' ) }
 					type="password"
-					value={ userPassword }
+					value={ state.password }
 					onChange={
 						( value ) => {
-							setUserPassword( value );
+							setState( prevValues => {
+								return { ...prevValues, password: value }
+							} );
 						}
 					}
 				/>
@@ -106,14 +120,16 @@ const OnboardingConnect = props => {
 			<PanelRow>
 				<Button
 					isPrimary
-					disabled={ ! userEmail || ! userPassword || isSending }
-					isBusy={ isSending }
+					type="submit"
+					disabled={ ! state.email || ! state.password || state.sending }
+					isBusy={ state.sending }
 					onClick={ signInRequest }
 					>
 					{ __( 'Connect your Mailer Glue account', 'mailerglue' ) }
 				</Button>
 			</PanelRow>
 		</PanelBody>
+		</form>
 
 		</>
 	);

@@ -1,4 +1,4 @@
-.mailerglue-admin {
+.mailerglue-ui {
 
 	h2, h4, h5 {
 		margin: 0;
@@ -17,14 +17,22 @@
 		margin: 0;
 		padding: 15px 0;
 		font-size: 14px;
-	}
-
-	p.mailerglue-text-bigger {
-		font-size: 15px;
+		&.components-base-control__help {
+			padding: 0 0 10px;
+			color: #999;
+		}
+		&.mailerglue-text-bigger {
+			font-size: 15px;
+		}
 	}
 
 	.mailerglue-text-regular {
 		font-weight: 400 !important;
+	}
+
+	.components-panel__row label.components-input-control__label {
+		font-size: 14px;
+		text-transform: none;
 	}
 
 }

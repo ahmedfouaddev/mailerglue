@@ -32,13 +32,17 @@ class Scripts {
 
 		$user = new \MailerGlue\User;
 
-		$options 		= new \MailerGlue\Options;
+		$options_api 	= new \MailerGlue\Options;
+		$options		= $options_api->get();
 
 		$args = array(
 			'admin_first_name'		=> ucfirst( $user->get_first_name() ),
 			'api_url'				=> 'mailerglue/' . MAILERGLUE_API_VERSION,
-			'access_token'			=> $options->get_access_token(),
 		);
+
+		foreach( $options as $key => $value ) {
+			$args[ $key ] = $value;
+		}
 
 		wp_localize_script( 'mailerglue-backend', 'mailerglue_backend', apply_filters( 'mailerglue_backend_args', $args ) );
 

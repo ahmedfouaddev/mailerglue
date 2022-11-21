@@ -12,7 +12,15 @@ import OnboardingLists from './lists';
 
 export const Onboarding = props => {
 
-	const [ step, setStep ] = useState( 1 );
+	const [state, setState] = useState( {
+		email: '',
+		password: '',
+		errors: [],
+		sending: false,
+		access_token: mailerglue_backend.access_token,
+		from_name: mailerglue_backend.from_name,
+		from_email: mailerglue_backend.from_email,
+	} );
 
 	return (
 		<>
@@ -21,8 +29,8 @@ export const Onboarding = props => {
 
 				<HashRouter>
 					<Switch>
-						<Route exact path="/" render={ (props) => <OnboardingConnect setStep={setStep} /> } />
-						<Route exact path="/settings" render={ (props) => <OnboardingLists setStep={setStep} /> } />
+						<Route exact path="/" render={ (props) => <OnboardingConnect state={state} setState={setState} /> } />
+						<Route exact path="/settings" render={ (props) => <OnboardingLists state={state} setState={setState} /> } />
 					</Switch>
 				</HashRouter>
 

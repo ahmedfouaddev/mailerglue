@@ -48,24 +48,24 @@ body.mailerglue-no-wp-ui #wpbody-content {
 /*!*******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/css/admin.scss ***!
   \*******************************************************************************************************************************************************************************************************************************************/
-.mailerglue-admin .mailerglue-primary-bar {
+.mailerglue-ui .mailerglue-primary-bar {
   min-height: 60px;
   background: var(--mailerglue-primary);
 }
-.mailerglue-admin .components-panel__row {
+.mailerglue-ui .components-panel__row {
   padding: 10px 0;
 }
-.mailerglue-admin .mailerglue-panelbody-form {
+.mailerglue-ui .mailerglue-panelbody-form {
   border: 0;
   padding: 0;
 }
-.mailerglue-admin .mailerglue-panelbody-form .components-flex {
+.mailerglue-ui .mailerglue-panelbody-form .components-flex {
   width: 100%;
 }
-.mailerglue-admin .mailerglue-panelbody-form .components-panel__row {
+.mailerglue-ui .mailerglue-panelbody-form .components-panel__row {
   margin: 0 !important;
 }
-.mailerglue-admin .mailerglue-panelbody-form .components-button {
+.mailerglue-ui .mailerglue-panelbody-form .components-button {
   width: 100%;
   text-align: center;
   align-items: center;
@@ -75,15 +75,15 @@ body.mailerglue-no-wp-ui #wpbody-content {
   line-height: 1.3;
   font-weight: 500;
 }
-.mailerglue-admin .components-input-control__container div.components-input-control__backdrop {
+.mailerglue-ui .components-input-control__container div.components-input-control__backdrop {
   border-color: rgb(223, 223, 223);
 }
-.mailerglue-admin .components-input-control__container input.components-input-control__input {
+.mailerglue-ui .components-input-control__container input.components-input-control__input {
   height: auto;
   padding: 12px 14px;
   font-size: 14px;
 }
-.mailerglue-admin .mailerglue-setup {
+.mailerglue-ui .mailerglue-setup {
   margin: 0 auto;
   max-width: 500px;
   flex-grow: 1;
@@ -94,7 +94,7 @@ body.mailerglue-no-wp-ui #wpbody-content {
   width: 100%;
   box-sizing: border-box;
 }
-.mailerglue-admin .mailerglue-bottom {
+.mailerglue-ui .mailerglue-bottom {
   margin: 0 auto;
   max-width: 500px;
   display: flex;
@@ -104,76 +104,87 @@ body.mailerglue-no-wp-ui #wpbody-content {
   width: 100%;
   box-sizing: border-box;
 }
-.mailerglue-admin .components-notice {
+.mailerglue-ui .components-notice {
   margin: 0 0 20px;
   padding: 10px 14px;
   border-radius: 3px;
   border: none;
 }
-.mailerglue-admin .components-notice .components-notice__content {
+.mailerglue-ui .components-notice .components-notice__content {
   margin: 0;
 }
-.mailerglue-admin .components-notice p {
+.mailerglue-ui .components-notice p {
   padding: 0;
+}
+.mailerglue-ui .components-notice.is-error {
+  background-color: #fbeaea;
 }
 /*!************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/css/typography.scss ***!
   \************************************************************************************************************************************************************************************************************************************************/
-.mailerglue-admin h2, .mailerglue-admin h4, .mailerglue-admin h5 {
+.mailerglue-ui h2, .mailerglue-ui h4, .mailerglue-ui h5 {
   margin: 0;
   padding: 4px 0;
 }
-.mailerglue-admin h2 {
+.mailerglue-ui h2 {
   font-weight: bold;
 }
-.mailerglue-admin h5 {
+.mailerglue-ui h5 {
   opacity: 0.7;
 }
-.mailerglue-admin p {
+.mailerglue-ui p {
   margin: 0;
   padding: 15px 0;
   font-size: 14px;
 }
-.mailerglue-admin p.mailerglue-text-bigger {
+.mailerglue-ui p.components-base-control__help {
+  padding: 0 0 10px;
+  color: #999;
+}
+.mailerglue-ui p.mailerglue-text-bigger {
   font-size: 15px;
 }
-.mailerglue-admin .mailerglue-text-regular {
+.mailerglue-ui .mailerglue-text-regular {
   font-weight: 400 !important;
+}
+.mailerglue-ui .components-panel__row label.components-input-control__label {
+  font-size: 14px;
+  text-transform: none;
 }
 /*!*******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/css/links.scss ***!
   \*******************************************************************************************************************************************************************************************************************************************/
-.mailerglue-admin a {
+.mailerglue-ui a {
   color: var(--mailerglue-primary-lighter-10);
 }
-.mailerglue-admin a:hover, .mailerglue-admin a:focus {
+.mailerglue-ui a:hover, .mailerglue-ui a:focus {
   color: var(--mailerglue-primary);
 }
-.mailerglue-admin a.mailerglue-link-muted {
+.mailerglue-ui a.mailerglue-link-muted {
   color: #999;
 }
-.mailerglue-admin a.mailerglue-link-muted:hover {
+.mailerglue-ui a.mailerglue-link-muted:hover {
   color: #666;
 }
-.mailerglue-admin a.mailerglue-link-muted:focus {
+.mailerglue-ui a.mailerglue-link-muted:focus {
   color: #666;
 }
-.mailerglue-admin .components-button.is-primary {
+.mailerglue-ui .components-button.is-primary {
   background: var(--mailerglue-primary-lighter-10);
 }
-.mailerglue-admin .components-button.is-primary:hover:not(:disabled) {
+.mailerglue-ui .components-button.is-primary:hover:not(:disabled) {
   background: var(--mailerglue-primary);
 }
-.mailerglue-admin .components-button.is-primary:active:not(:disabled) {
+.mailerglue-ui .components-button.is-primary:active:not(:disabled) {
   background: var(--mailerglue-primary);
 }
-.mailerglue-admin .components-button.is-primary:focus:not(:disabled) {
+.mailerglue-ui .components-button.is-primary:focus:not(:disabled) {
   box-shadow: none;
 }
-.mailerglue-admin .components-button.is-primary:not([aria-disabled=true]):active {
+.mailerglue-ui .components-button.is-primary:not([aria-disabled=true]):active {
   color: rgba(255, 255, 255, 0.4);
 }
-.mailerglue-admin .components-button.is-primary.is-busy, .mailerglue-admin .components-button.is-primary.is-busy:disabled, .mailerglue-admin .components-button.is-primary.is-busy[aria-disabled=true] {
+.mailerglue-ui .components-button.is-primary.is-busy, .mailerglue-ui .components-button.is-primary.is-busy:disabled, .mailerglue-ui .components-button.is-primary.is-busy[aria-disabled=true] {
   background-image: linear-gradient(-45deg, var(--mailerglue-primary-lighter-10) 33%, var(--mailerglue-primary) 33%, var(--mailerglue-primary) 70%, var(--mailerglue-primary-lighter-10) 70%);
   border-color: var(--mailerglue-primary-lighter-10);
   color: #fff;

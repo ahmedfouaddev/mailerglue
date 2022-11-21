@@ -30,39 +30,68 @@ __webpack_require__.r(__webpack_exports__);
 
 const OnboardingConnect = props => {
   const {
+    state,
+    setState
+  } = props;
+  const {
     admin_first_name,
-    access_token
+    api_url
   } = mailerglue_backend;
-  const [accessToken, setAccessToken] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(access_token);
-  const [userEmail, setUserEmail] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [userPassword, setUserPassword] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [errorMsg, setErrorMsg] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [isSending, setIsSending] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
 
   const signInRequest = e => {
-    setIsSending(true);
+    setState(prevValues => {
+      return { ...prevValues,
+        sending: true
+      };
+    });
     _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2___default()({
-      path: mailerglue_backend.api_url + '/verify_login',
+      path: api_url + '/verify_login',
       method: 'post',
       data: {
-        email: userEmail,
-        password: userPassword
+        email: state.email,
+        password: state.password
       }
     }).then(response => {
       console.log(response);
 
       if (!response.success) {
-        setIsSending(false);
-        setErrorMsg(response.message);
-        setAccessToken('');
+        setState(prevValues => {
+          return { ...prevValues,
+            sending: false,
+            errors: {
+              login: response.message
+            },
+            access_token: ''
+          };
+        });
       } else {
-        setErrorMsg('');
-        setAccessToken(response);
+        setState(prevValues => {
+          return { ...prevValues,
+            sending: false,
+            errors: {
+              login: ''
+            },
+            access_token: response,
+            from_name: response.name,
+            from_email: response.email
+          };
+        });
         props.history.push('/settings');
       }
+    }, error => {
+      setState(prevValues => {
+        return { ...prevValues,
+          sending: false,
+          errors: {
+            login: error.message
+          },
+          access_token: ''
+        };
+      });
     });
   };
 
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {}, []);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, admin_first_name ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalHeading, {
     level: 5,
     className: "mailerglue-text-regular"
@@ -73,39 +102,50 @@ const OnboardingConnect = props => {
     level: 2
   }, "Let's begin by connecting your Mailer Glue account"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "mailerglue-text-bigger"
-  }, "Don't have an account yet? ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  }, "Don't have an account yet? ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ExternalLink, {
     href: "#"
   }, "Sign up")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalSpacer, {
     paddingTop: 10,
     marginBottom: 0
-  }), errorMsg && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Notice, {
+  }), state.errors.login && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Notice, {
     status: "error",
     isDismissible: false
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, errorMsg)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, state.errors.login)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
+    action: "/"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     className: "mailerglue-panelbody-form"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalInputControl, {
     autoFocus: true,
     placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email address', 'mailerglue'),
-    value: userEmail,
+    value: state.email,
     onChange: value => {
-      setUserEmail(value);
+      setState(prevValues => {
+        return { ...prevValues,
+          email: value
+        };
+      });
     }
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalInputControl, {
     placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Password', 'mailerglue'),
     type: "password",
-    value: userPassword,
+    value: state.password,
     onChange: value => {
-      setUserPassword(value);
+      setState(prevValues => {
+        return { ...prevValues,
+          password: value
+        };
+      });
     }
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalSpacer, {
     paddingTop: 3,
     marginBottom: 0
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
     isPrimary: true,
-    disabled: !userEmail || !userPassword || isSending,
-    isBusy: isSending,
+    type: "submit",
+    disabled: !state.email || !state.password || state.sending,
+    isBusy: state.sending,
     onClick: signInRequest
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Connect your Mailer Glue account', 'mailerglue')))));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Connect your Mailer Glue account', 'mailerglue'))))));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router__WEBPACK_IMPORTED_MODULE_4__.withRouter)(OnboardingConnect));
@@ -143,20 +183,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const Onboarding = props => {
-  const [step, setStep] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(1);
+  const [state, setState] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    email: '',
+    password: '',
+    errors: [],
+    sending: false,
+    access_token: mailerglue_backend.access_token,
+    from_name: mailerglue_backend.from_name,
+    from_email: mailerglue_backend.from_email
+  });
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_top_bar__WEBPACK_IMPORTED_MODULE_3__["default"], null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mailerglue-setup"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.HashRouter, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Switch, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
     exact: true,
     path: "/",
     render: props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_connect__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      setStep: setStep
+      state: state,
+      setState: setState
     })
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
     exact: true,
     path: "/settings",
     render: props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_lists__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      setStep: setStep
+      state: state,
+      setState: setState
     })
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mailerglue-bottom"
@@ -201,13 +251,123 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const OnboardingLists = props => {
+  const {
+    state,
+    setState
+  } = props;
+  const {
+    admin_first_name,
+    api_url
+  } = mailerglue_backend;
+
+  const saveBasicSettings = e => {
+    setState(prevValues => {
+      return { ...prevValues,
+        sending: true
+      };
+    });
+    _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2___default()({
+      path: api_url + '/save_basic_settings',
+      method: 'post',
+      data: {
+        from_name: state.from_name,
+        from_email: state.from_email
+      },
+      headers: {
+        'MailerGlue-Access-Token': state.access_token.token,
+        'MailerGlue-Account-ID': state.access_token.id
+      }
+    }).then(response => {
+      console.log(response);
+
+      if (!response.success) {
+        setState(prevValues => {
+          return { ...prevValues,
+            sending: false,
+            errors: {
+              settings: response.message
+            }
+          };
+        });
+      } else {
+        setState(prevValues => {
+          return { ...prevValues,
+            sending: false,
+            errors: {
+              settings: ''
+            }
+          };
+        });
+        props.history.push('/personalize');
+      }
+    }, error => {
+      setState(prevValues => {
+        return { ...prevValues,
+          sending: false,
+          errors: {
+            settings: error.message
+          }
+        };
+      });
+    });
+  };
+
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    console.log(state);
+  }, []);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalHeading, {
     level: 2
   }, "Set your default newsletter settings"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "mailerglue-text-bigger"
-  }, "Don't have an account yet? ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    href: "#"
-  }, "Sign up")));
+  }, "You can easily set different newsletter settings when publishing a newsletter or change your newsletter defaults in the Settings."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalSpacer, {
+    paddingTop: 10,
+    marginBottom: 0
+  }), state.errors.settings && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Notice, {
+    status: "error",
+    isDismissible: false
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, state.errors.settings)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
+    action: "/"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    className: "mailerglue-panelbody-form"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalInputControl, {
+    autoFocus: true,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('From name', 'mailerglue'),
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('ABC Productions, Inc.', 'mailerglue'),
+    value: state.from_name,
+    onChange: value => {
+      setState(prevValues => {
+        return { ...prevValues,
+          from_name: value
+        };
+      });
+    }
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "components-base-control__help"
+  }, "Your subscribers will see this name in their inboxes."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalInputControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('From email', 'mailerglue'),
+    type: "email",
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('name@domain.com', 'mailerglue'),
+    value: state.from_email,
+    required: true,
+    onChange: value => {
+      setState(prevValues => {
+        return { ...prevValues,
+          from_email: value
+        };
+      });
+    }
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "components-base-control__help"
+  }, "Subscribers will see and reply to this email address."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalSpacer, {
+    paddingTop: 3,
+    marginBottom: 0
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    isPrimary: true,
+    type: "submit",
+    disabled: !state.from_name || !state.from_email || state.sending,
+    isBusy: state.sending,
+    onClick: saveBasicSettings
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Save & continue', 'mailerglue'))))));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router__WEBPACK_IMPORTED_MODULE_4__.withRouter)(OnboardingLists));

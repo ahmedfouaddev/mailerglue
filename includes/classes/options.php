@@ -17,19 +17,62 @@ class Options {
 		global $mailerglue_options;
 
 		$mailerglue_options = get_option( 'mailerglue_options' );
+
+		//delete_option( 'mailerglue_options' );
+	}
+
+	/**
+	 * Returns all options object.
+	 */
+	public function get() {
+		global $mailerglue_options;
+
+		if ( empty( $mailerglue_options ) ) {
+			$mailerglue_options = array();
+		}
+
+		if ( ! isset( $mailerglue_options[ 'from_name' ] ) ) {
+			$mailerglue_options[ 'from_name' ] = '';
+		}
+
+		if ( ! isset( $mailerglue_options[ 'from_email' ] ) ) {
+			$mailerglue_options[ 'from_email' ] = '';
+		}
+
+		if ( ! isset( $mailerglue_options[ 'access_token' ] ) ) {
+			$mailerglue_options[ 'access_token' ] = array();
+		}
+
+		return $mailerglue_options;
+	}
+
+	/**
+	 * Has a field?
+	 */
+	public function has_field( $id ) {
+		global $mailerglue_options;
+
+		return ! empty( $mailerglue_options ) && ! empty( $mailerglue_options[ $id ] );
 	}
 
 	/**
 	 * Update option.
 	 */
-	public function update( $id, $value ) {
+	public function update( $id, $values ) {
 		global $mailerglue_options;
 
 		if ( empty( $id ) ) {
 			return;
 		}
 
-		$mailerglue_options[ $id ] = $value;
+		if ( $id === 'data' && is_array( $values ) ) {
+			foreach( $values as $key => $value ) {
+				$mailerglue_options[ $key ] = $value;
+			}
+		} else {
+
+			$mailerglue_options[ $id ] = $values;
+		}
 
 		update_option( 'mailerglue_options', $mailerglue_options );
 	}
