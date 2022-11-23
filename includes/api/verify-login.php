@@ -43,10 +43,11 @@ class Verify_Login {
 				'MailerGlue-Email' 		=> $email,
 				'MailerGlue-Password' 	=> $password,
 			),
+			'body'    		=> json_encode( $data ),
+			'data_format' 	=> 'body',
 		);
 
-		$result 	= wp_remote_get( MAILERGLUE_REMOTE_APP . '/get_access_token', $args );
-
+		$result 	= wp_remote_post( MAILERGLUE_REMOTE_APP . '/verify_login', $args );
 		$response 	= json_decode( wp_remote_retrieve_body( $result ), true );
 
 		// If successful, save access token.

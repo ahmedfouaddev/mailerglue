@@ -1,8 +1,6 @@
-import { __ } from '@wordpress/i18n';
+import {__} from '@wordpress/i18n';
 
-import apiFetch from '@wordpress/api-fetch';
-
-import { render, Component, Fragment, useState, useCallback, useEffect, useRef } from '@wordpress/element';
+import {render, Component, Fragment, useState, useCallback, useEffect, useRef} from '@wordpress/element';
 
 import {
 	__experimentalHeading as Heading,
@@ -16,12 +14,17 @@ import {
 	ExternalLink
 } from '@wordpress/components';
 
-import { withRouter } from 'react-router';
+import {withRouter} from 'react-router';
+
+import apiFetch from '@wordpress/api-fetch';
+import useFocus from '../helpers/use-focus.js';
 
 const OnboardingConnect = props => {
 
 	const {state, setState} = props;
 	const {admin_first_name, api_url} = mailerglue_backend;
+
+	const [emailInputRef, setEmailInputRef] = useFocus();
 
 	const signInRequest = (e) => {
 
@@ -38,11 +41,12 @@ const OnboardingConnect = props => {
 			},
 		} ).then(
 			(response) => {
-				console.log(response);
 				if ( ! response.success ) {
 					setState( prevValues => {
-						return { ...prevValues, sending: false, errors: { login: response.message }, access_token: '' }
+						return { ...prevValues, sending: false, errors: { login: response.message }, access_token: '', password: '' }
 					} );
+
+					setEmailInputRef();
 				} else {
 					setState( prevValues => {
 						return { ...prevValues, sending: false, errors: { login: '' }, access_token: response, from_name: response.name, from_email: response.email }
@@ -54,7 +58,7 @@ const OnboardingConnect = props => {
 
 			(error) => {
 				setState( prevValues => {
-					return { ...prevValues, sending: false, errors: { login: error.message }, access_token: '' }
+					return { ...prevValues, sending: false, errors: { login: error.message }, access_token: '', password: '' }
 				} );
 			}
 		);
@@ -62,7 +66,7 @@ const OnboardingConnect = props => {
 	};
 
 	useEffect(() => {
-
+		setEmailInputRef();
 	}, []);
 
 	return (
@@ -90,7 +94,6 @@ const OnboardingConnect = props => {
 		<PanelBody className="mailerglue-panelbody-form">
 			<PanelRow>
 				<InputControl
-					autoFocus
 					placeholder={ __( 'Email address', 'mailerglue' ) }
 					value={ state.email }
 					onChange={
@@ -100,6 +103,7 @@ const OnboardingConnect = props => {
 							} );
 						}
 					}
+					ref={emailInputRef}
 				/>
 			</PanelRow>
 			<PanelRow>

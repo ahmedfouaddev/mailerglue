@@ -41,7 +41,6 @@ const OnboardingLists = props => {
 			},
 		} ).then(
 			(response) => {
-				console.log(response);
 				if ( ! response.success ) {
 					setState( prevValues => {
 						return { ...prevValues, sending: false, errors: { settings: response.message } }
@@ -64,7 +63,7 @@ const OnboardingLists = props => {
 	};
 
 	useEffect(() => {
-		console.log(state);
+
 	}, []);
 
 	return (
