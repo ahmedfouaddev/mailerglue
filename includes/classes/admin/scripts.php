@@ -35,9 +35,12 @@ class Scripts {
 		$options_api 	= new \MailerGlue\Options;
 		$options		= $options_api->get();
 
+		$words_api		= new \MailerGlue\Words;
+		$words			= $words_api->get( $user );
+
 		$args = array(
-			'admin_first_name'		=> ucfirst( $user->get_first_name() ),
 			'api_url'				=> 'mailerglue/' . MAILERGLUE_API_VERSION,
+			'words'					=> $words,
 		);
 
 		foreach( $options as $key => $value ) {

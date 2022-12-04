@@ -1,6 +1,6 @@
-import {__} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
-import {render, Component, Fragment, useState, useCallback, useEffect, useRef} from '@wordpress/element';
+import { render, Component, Fragment, useState, useCallback, useEffect, useRef } from '@wordpress/element';
 
 import {
 	__experimentalHeading as Heading,
@@ -14,26 +14,29 @@ import {
 	ExternalLink
 } from '@wordpress/components';
 
-import {withRouter} from 'react-router';
+import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import apiFetch from '@wordpress/api-fetch';
-import useFocus from '../helpers/use-focus.js';
 
-const OnboardingConnect = props => {
+import { useFocus } from '@helpers/use-focus';
 
-	const {state, setState} = props;
-	const {admin_first_name, api_url} = mailerglue_backend;
+const Signup = props => {
 
-	const [emailInputRef, setEmailInputRef] = useFocus();
+	const { state, setState } = props;
 
-	const signInRequest = (e) => {
+	const { api_url, words } = mailerglue_backend;
+
+	const [ emailInputRef, setEmailInputRef ] = useFocus();
+
+	const doAPIRequest = (e) => {
 
 		setState( prevValues => {
 			return { ...prevValues, sending: true }
 		} );
 
 		apiFetch( {
-			path: api_url + '/verify_login',
+			path: api_url + '/signup',
 			method: 'post',
 			data: {
 				email: state.email,
@@ -43,22 +46,22 @@ const OnboardingConnect = props => {
 			(response) => {
 				if ( ! response.success ) {
 					setState( prevValues => {
-						return { ...prevValues, sending: false, errors: { login: response.message }, access_token: '', password: '' }
+						return { ...prevValues, sending: false, errors: { signup: response.message }, access_token: '', password: '' }
 					} );
 
 					setEmailInputRef();
 				} else {
 					setState( prevValues => {
-						return { ...prevValues, sending: false, errors: { login: '' }, access_token: response, from_name: response.name, from_email: response.email }
+						return { ...prevValues, sending: false, errors: { signup: '' } }
 					} );
 
-					props.history.push('/settings');
+					//props.history.push('/settings');
 				}
 			},
 
 			(error) => {
 				setState( prevValues => {
-					return { ...prevValues, sending: false, errors: { login: error.message }, access_token: '', password: '' }
+					return { ...prevValues, sending: false, errors: { signup: error.message }, password: '' }
 				} );
 			}
 		);
@@ -72,29 +75,24 @@ const OnboardingConnect = props => {
 	return (
 		<>
 
-		{ admin_first_name ? 
-			<Heading level={5} className="mailerglue-text-regular">Welcome, {admin_first_name}!</Heading> : 
-			<Heading level={5} className="mailerglue-text-regular">Welcome!</Heading>
-		}
-
-		<Heading level={2}>Let's begin by connecting your Mailer Glue account</Heading>
+		<Heading level={2}>{ words.signup_heading }</Heading>
 
 		<p className="mailerglue-text-bigger">
-			Don't have an account yet? <ExternalLink href="#">Sign up</ExternalLink>
+			{ words.signup_text }
 		</p>
 
 		<Spacer paddingTop={10} marginBottom={0} />
 
-		{ state.errors.login &&
+		{ state.errors.signup &&
 		<Notice status="error" isDismissible={false}>
-			<p>{ state.errors.login }</p>
+			<p>{ state.errors.signup }</p>
 		</Notice> }
 
 		<form action="/">
 		<PanelBody className="mailerglue-panelbody-form">
 			<PanelRow>
 				<InputControl
-					placeholder={ __( 'Email address', 'mailerglue' ) }
+					placeholder={ words.email_label }
 					value={ state.email }
 					onChange={
 						( value ) => {
@@ -108,7 +106,7 @@ const OnboardingConnect = props => {
 			</PanelRow>
 			<PanelRow>
 				<InputControl
-					placeholder={ __( 'Password', 'mailerglue' ) }
+					placeholder={ words.password_label }
 					type="password"
 					value={ state.password }
 					onChange={
@@ -127,9 +125,9 @@ const OnboardingConnect = props => {
 					type="submit"
 					disabled={ ! state.email || ! state.password || state.sending }
 					isBusy={ state.sending }
-					onClick={ signInRequest }
+					onClick={ doAPIRequest }
 					>
-					{ __( 'Connect your Mailer Glue account', 'mailerglue' ) }
+					{ words.signup }
 				</Button>
 			</PanelRow>
 		</PanelBody>
@@ -140,4 +138,4 @@ const OnboardingConnect = props => {
 
 }
 
-export default withRouter(OnboardingConnect);
+export default withRouter(Signup);

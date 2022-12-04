@@ -29,7 +29,7 @@
 			box-shadow: none;
 		}
 		&:not([aria-disabled=true]):active {
-			color: rgba(255, 255, 255, 0.4);
+			color: #fff;
 		}
 		&.is-busy,
 		&.is-busy:disabled,

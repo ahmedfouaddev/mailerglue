@@ -1,56 +1,54 @@
-/******/ (() => { // webpackBootstrap
+/******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/helpers/use-focus.js":
-/*!**********************************!*\
-  !*** ./src/helpers/use-focus.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ "./src/common/top-bar/index.js":
+/*!*************************************!*\
+  !*** ./src/common/top-bar/index.js ***!
+  \*************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "TopBar": function() { return /* binding */ TopBar; }
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2__);
 
 
-const useFocus = () => {
-  const htmlElRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
 
-  const setFocus = () => {
-    htmlElRef.current && htmlElRef.current.focus();
-  };
 
-  return [htmlElRef, setFocus];
+const TopBar = props => {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mailerglue-primary-bar"
+  }));
 };
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useFocus);
 
 /***/ }),
 
-/***/ "./src/onboarding/connect.js":
-/*!***********************************!*\
-  !*** ./src/onboarding/connect.js ***!
-  \***********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ "./src/components/onboarding/Connect/index.js":
+/*!****************************************************!*\
+  !*** ./src/components/onboarding/Connect/index.js ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _helpers_use_focus_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../helpers/use-focus.js */ "./src/helpers/use-focus.js");
+/* harmony import */ var _helpers_use_focus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @helpers/use-focus */ "./src/helpers/use-focus/index.js");
 
 
 
@@ -59,87 +57,73 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const OnboardingConnect = props => {
+const Connect = props => {
   const {
     state,
-    setState
+    setState,
+    updateState
   } = props;
   const {
-    admin_first_name,
-    api_url
+    api_url,
+    words
   } = mailerglue_backend;
-  const [emailInputRef, setEmailInputRef] = (0,_helpers_use_focus_js__WEBPACK_IMPORTED_MODULE_4__["default"])();
-
-  const signInRequest = e => {
-    setState(prevValues => {
-      return { ...prevValues,
-        sending: true
-      };
-    });
+  const [emailInputRef, setEmailInputRef] = (0,_helpers_use_focus__WEBPACK_IMPORTED_MODULE_4__.useFocus)();
+  const doAPI = e => {
+    updateState('sending', true);
     _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
       path: api_url + '/verify_login',
       method: 'post',
       data: {
-        email: state.email,
-        password: state.password
+        email: state.loginEmail,
+        password: state.loginPassword
       }
     }).then(response => {
       if (!response.success) {
-        setState(prevValues => {
-          return { ...prevValues,
-            sending: false,
-            errors: {
-              login: response.message
-            },
-            access_token: '',
-            password: ''
-          };
+        updateState('array', {
+          sending: false,
+          errors: {
+            login: response.message
+          },
+          access_token: '',
+          loginPassword: ''
         });
         setEmailInputRef();
       } else {
-        setState(prevValues => {
-          return { ...prevValues,
-            sending: false,
-            errors: {
-              login: ''
-            },
-            access_token: response,
-            from_name: response.name,
-            from_email: response.email
-          };
+        updateState('array', {
+          sending: false,
+          errors: {
+            login: ''
+          },
+          access_token: response,
+          from_name: response.name,
+          from_email: response.email
         });
         props.history.push('/settings');
       }
     }, error => {
-      setState(prevValues => {
-        return { ...prevValues,
-          sending: false,
-          errors: {
-            login: error.message
-          },
-          access_token: '',
-          password: ''
-        };
+      updateState('array', {
+        sending: false,
+        errors: {
+          login: error.message
+        },
+        access_token: '',
+        loginPassword: ''
       });
     });
   };
-
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     setEmailInputRef();
   }, []);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, admin_first_name ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalHeading, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalHeading, {
     level: 5,
     className: "mailerglue-text-regular"
-  }, "Welcome, ", admin_first_name, "!") : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalHeading, {
-    level: 5,
-    className: "mailerglue-text-regular"
-  }, "Welcome!"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalHeading, {
+  }, words.welcome), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalHeading, {
     level: 2
-  }, "Let's begin by connecting your Mailer Glue account"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+  }, words.login_heading), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "mailerglue-text-bigger"
-  }, "Don't have an account yet? ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ExternalLink, {
-    href: "#"
-  }, "Sign up")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalSpacer, {
+  }, words.no_account_yet, " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
+    to: "/signup"
+  }, words.signup)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalSpacer, {
     paddingTop: 10,
     marginBottom: 0
   }), state.errors.login && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
@@ -150,26 +134,18 @@ const OnboardingConnect = props => {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     className: "mailerglue-panelbody-form"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalInputControl, {
-    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Email address', 'mailerglue'),
-    value: state.email,
+    placeholder: words.email_label,
+    value: state.loginEmail,
     onChange: value => {
-      setState(prevValues => {
-        return { ...prevValues,
-          email: value
-        };
-      });
+      updateState('loginEmail', value);
     },
     ref: emailInputRef
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalInputControl, {
-    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Password', 'mailerglue'),
+    placeholder: words.password_label,
     type: "password",
-    value: state.password,
+    value: state.loginPassword,
     onChange: value => {
-      setState(prevValues => {
-        return { ...prevValues,
-          password: value
-        };
-      });
+      updateState('loginPassword', value);
     }
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalSpacer, {
     paddingTop: 3,
@@ -177,98 +153,23 @@ const OnboardingConnect = props => {
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     isPrimary: true,
     type: "submit",
-    disabled: !state.email || !state.password || state.sending,
+    disabled: !state.loginEmail || !state.loginPassword || state.sending,
     isBusy: state.sending,
-    onClick: signInRequest
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Connect your Mailer Glue account', 'mailerglue'))))));
+    onClick: doAPI
+  }, words.connect)))));
 };
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router__WEBPACK_IMPORTED_MODULE_5__.withRouter)(OnboardingConnect));
+/* harmony default export */ __webpack_exports__["default"] = ((0,react_router__WEBPACK_IMPORTED_MODULE_6__.withRouter)(Connect));
 
 /***/ }),
 
-/***/ "./src/onboarding/index.js":
-/*!*********************************!*\
-  !*** ./src/onboarding/index.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ "./src/components/onboarding/Settings/index.js":
+/*!*****************************************************!*\
+  !*** ./src/components/onboarding/Settings/index.js ***!
+  \*****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Onboarding": () => (/* binding */ Onboarding)
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var _top_bar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../top-bar */ "./src/top-bar/index.js");
-/* harmony import */ var _connect__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./connect */ "./src/onboarding/connect.js");
-/* harmony import */ var _lists__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lists */ "./src/onboarding/lists.js");
-
-
-
-
-
-
-
-
-const Onboarding = props => {
-  const [state, setState] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    email: '',
-    password: '',
-    errors: [],
-    sending: false,
-    access_token: mailerglue_backend.access_token,
-    from_name: mailerglue_backend.from_name,
-    from_email: mailerglue_backend.from_email
-  });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_top_bar__WEBPACK_IMPORTED_MODULE_3__["default"], null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "mailerglue-setup"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.HashRouter, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Switch, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
-    exact: true,
-    path: "/",
-    render: props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_connect__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      state: state,
-      setState: setState
-    })
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
-    exact: true,
-    path: "/settings",
-    render: props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_lists__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      state: state,
-      setState: setState
-    })
-  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "mailerglue-bottom"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    href: "#",
-    className: "mailerglue-link-muted"
-  }, "Skip onboarding")));
-};
-var rootElement = document.getElementById('mailerglue-onboarding');
-
-if (rootElement) {
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Onboarding, null), rootElement);
-}
-
-/***/ }),
-
-/***/ "./src/onboarding/lists.js":
-/*!*********************************!*\
-  !*** ./src/onboarding/lists.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
@@ -277,7 +178,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var _helpers_use_focus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @helpers/use-focus */ "./src/helpers/use-focus/index.js");
 
 
 
@@ -285,19 +187,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const OnboardingLists = props => {
+const Settings = props => {
   const {
     state,
-    setState
+    setState,
+    updateState
   } = props;
   const {
-    admin_first_name,
-    api_url
+    api_url,
+    words
   } = mailerglue_backend;
-
   const saveBasicSettings = e => {
     setState(prevValues => {
-      return { ...prevValues,
+      return {
+        ...prevValues,
         sending: true
       };
     });
@@ -315,7 +218,8 @@ const OnboardingLists = props => {
     }).then(response => {
       if (!response.success) {
         setState(prevValues => {
-          return { ...prevValues,
+          return {
+            ...prevValues,
             sending: false,
             errors: {
               settings: response.message
@@ -324,7 +228,8 @@ const OnboardingLists = props => {
         });
       } else {
         setState(prevValues => {
-          return { ...prevValues,
+          return {
+            ...prevValues,
             sending: false,
             errors: {
               settings: ''
@@ -335,7 +240,8 @@ const OnboardingLists = props => {
       }
     }, error => {
       setState(prevValues => {
-        return { ...prevValues,
+        return {
+          ...prevValues,
           sending: false,
           errors: {
             settings: error.message
@@ -344,8 +250,9 @@ const OnboardingLists = props => {
       });
     });
   };
-
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {}, []);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    console.log(state);
+  }, []);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalHeading, {
     level: 2
   }, "Set your default newsletter settings"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
@@ -361,13 +268,13 @@ const OnboardingLists = props => {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     className: "mailerglue-panelbody-form"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalInputControl, {
-    autoFocus: true,
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('From name', 'mailerglue'),
-    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('ABC Productions, Inc.', 'mailerglue'),
+    label: "From name",
+    placeholder: "ABC Productions, Inc.",
     value: state.from_name,
     onChange: value => {
       setState(prevValues => {
-        return { ...prevValues,
+        return {
+          ...prevValues,
           from_name: value
         };
       });
@@ -375,14 +282,15 @@ const OnboardingLists = props => {
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "components-base-control__help"
   }, "Your subscribers will see this name in their inboxes."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalInputControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('From email', 'mailerglue'),
+    label: "From email",
     type: "email",
-    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('name@domain.com', 'mailerglue'),
+    placeholder: "name@domain.com",
     value: state.from_email,
     required: true,
     onChange: value => {
       setState(prevValues => {
-        return { ...prevValues,
+        return {
+          ...prevValues,
           from_email: value
         };
       });
@@ -398,23 +306,241 @@ const OnboardingLists = props => {
     disabled: !state.from_name || !state.from_email || state.sending,
     isBusy: state.sending,
     onClick: saveBasicSettings
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Save & continue', 'mailerglue'))))));
+  }, "Save & continue")))));
 };
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router__WEBPACK_IMPORTED_MODULE_4__.withRouter)(OnboardingLists));
+/* harmony default export */ __webpack_exports__["default"] = ((0,react_router__WEBPACK_IMPORTED_MODULE_5__.withRouter)(Settings));
 
 /***/ }),
 
-/***/ "./src/top-bar/index.js":
-/*!******************************!*\
-  !*** ./src/top-bar/index.js ***!
-  \******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ "./src/components/onboarding/Signup/index.js":
+/*!***************************************************!*\
+  !*** ./src/components/onboarding/Signup/index.js ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _helpers_use_focus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @helpers/use-focus */ "./src/helpers/use-focus/index.js");
+
+
+
+
+
+
+
+
+const Signup = props => {
+  const {
+    state,
+    setState
+  } = props;
+  const {
+    api_url,
+    words
+  } = mailerglue_backend;
+  const [emailInputRef, setEmailInputRef] = (0,_helpers_use_focus__WEBPACK_IMPORTED_MODULE_4__.useFocus)();
+  const doAPIRequest = e => {
+    setState(prevValues => {
+      return {
+        ...prevValues,
+        sending: true
+      };
+    });
+    _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
+      path: api_url + '/signup',
+      method: 'post',
+      data: {
+        email: state.email,
+        password: state.password
+      }
+    }).then(response => {
+      if (!response.success) {
+        setState(prevValues => {
+          return {
+            ...prevValues,
+            sending: false,
+            errors: {
+              signup: response.message
+            },
+            access_token: '',
+            password: ''
+          };
+        });
+        setEmailInputRef();
+      } else {
+        setState(prevValues => {
+          return {
+            ...prevValues,
+            sending: false,
+            errors: {
+              signup: ''
+            }
+          };
+        });
+
+        //props.history.push('/settings');
+      }
+    }, error => {
+      setState(prevValues => {
+        return {
+          ...prevValues,
+          sending: false,
+          errors: {
+            signup: error.message
+          },
+          password: ''
+        };
+      });
+    });
+  };
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setEmailInputRef();
+  }, []);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalHeading, {
+    level: 2
+  }, words.signup_heading), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "mailerglue-text-bigger"
+  }, words.signup_text), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalSpacer, {
+    paddingTop: 10,
+    marginBottom: 0
+  }), state.errors.signup && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
+    status: "error",
+    isDismissible: false
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, state.errors.signup)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
+    action: "/"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    className: "mailerglue-panelbody-form"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalInputControl, {
+    placeholder: words.email_label,
+    value: state.email,
+    onChange: value => {
+      setState(prevValues => {
+        return {
+          ...prevValues,
+          email: value
+        };
+      });
+    },
+    ref: emailInputRef
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalInputControl, {
+    placeholder: words.password_label,
+    type: "password",
+    value: state.password,
+    onChange: value => {
+      setState(prevValues => {
+        return {
+          ...prevValues,
+          password: value
+        };
+      });
+    }
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalSpacer, {
+    paddingTop: 3,
+    marginBottom: 0
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    isPrimary: true,
+    type: "submit",
+    disabled: !state.email || !state.password || state.sending,
+    isBusy: state.sending,
+    onClick: doAPIRequest
+  }, words.signup)))));
+};
+/* harmony default export */ __webpack_exports__["default"] = ((0,react_router__WEBPACK_IMPORTED_MODULE_5__.withRouter)(Signup));
+
+/***/ }),
+
+/***/ "./src/components/onboarding/index.js":
+/*!********************************************!*\
+  !*** ./src/components/onboarding/index.js ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "Connect": function() { return /* reexport safe */ _Connect__WEBPACK_IMPORTED_MODULE_0__["default"]; },
+/* harmony export */   "Settings": function() { return /* reexport safe */ _Settings__WEBPACK_IMPORTED_MODULE_1__["default"]; },
+/* harmony export */   "Signup": function() { return /* reexport safe */ _Signup__WEBPACK_IMPORTED_MODULE_2__["default"]; }
+/* harmony export */ });
+/* harmony import */ var _Connect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Connect */ "./src/components/onboarding/Connect/index.js");
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Settings */ "./src/components/onboarding/Settings/index.js");
+/* harmony import */ var _Signup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Signup */ "./src/components/onboarding/Signup/index.js");
+
+
+
+
+
+/***/ }),
+
+/***/ "./src/data/onboarding-routes/index.js":
+/*!*********************************************!*\
+  !*** ./src/data/onboarding-routes/index.js ***!
+  \*********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "routes": function() { return /* binding */ routes; }
+/* harmony export */ });
+/* harmony import */ var _components_onboarding__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @components/onboarding */ "./src/components/onboarding/index.js");
+
+const routes = [{
+  path: '',
+  component: _components_onboarding__WEBPACK_IMPORTED_MODULE_0__.Connect
+}, {
+  path: 'settings',
+  component: _components_onboarding__WEBPACK_IMPORTED_MODULE_0__.Settings
+}, {
+  path: 'signup',
+  component: _components_onboarding__WEBPACK_IMPORTED_MODULE_0__.Signup
+}];
+
+/***/ }),
+
+/***/ "./src/helpers/use-focus/index.js":
+/*!****************************************!*\
+  !*** ./src/helpers/use-focus/index.js ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useFocus": function() { return /* binding */ useFocus; }
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+
+const useFocus = () => {
+  const htmlElRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  const setFocus = () => {
+    htmlElRef.current && htmlElRef.current.focus();
+  };
+  return [htmlElRef, setFocus];
+};
+
+/***/ }),
+
+/***/ "./src/renders/onboarding/index.js":
+/*!*****************************************!*\
+  !*** ./src/renders/onboarding/index.js ***!
+  \*****************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Onboarding": function() { return /* binding */ Onboarding; }
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
@@ -422,18 +548,72 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var _common_top_bar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @common/top-bar */ "./src/common/top-bar/index.js");
+/* harmony import */ var _data_onboarding_routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @data/onboarding-routes */ "./src/data/onboarding-routes/index.js");
 
 
 
 
 
-const MailerGlueTopBar = props => {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "mailerglue-primary-bar"
-  }));
+
+
+const Onboarding = props => {
+  let a = mailerglue_backend;
+  const [state, setState] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    email: '',
+    password: '',
+    loginEmail: '',
+    loginPassword: '',
+    errors: [],
+    sending: false,
+    access_token: a.access_token,
+    from_name: a.from_name,
+    from_email: a.from_email
+  });
+  const updateState = (key, value) => {
+    if (key == 'array') {
+      let object = value;
+      setState(prevValues => {
+        return {
+          ...prevValues,
+          ...object
+        };
+      });
+    } else {
+      setState(prevValues => {
+        return {
+          ...prevValues,
+          [key]: value
+        };
+      });
+    }
+  };
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_common_top_bar__WEBPACK_IMPORTED_MODULE_3__.TopBar, null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mailerglue-setup"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.HashRouter, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Switch, null, _data_onboarding_routes__WEBPACK_IMPORTED_MODULE_4__.routes.map((route, i) => {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+      exact: true,
+      path: '/' + route.path,
+      key: i,
+      render: props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(route.component, {
+        state: state,
+        setState: setState,
+        updateState: updateState
+      })
+    });
+  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mailerglue-bottom"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+    href: "#",
+    className: "mailerglue-link-muted"
+  }, "Skip onboarding")));
 };
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MailerGlueTopBar);
+var rootElement = document.getElementById('mailerglue-onboarding');
+if (rootElement) {
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Onboarding, null), rootElement);
+}
 
 /***/ }),
 
@@ -441,18 +621,18 @@ const MailerGlueTopBar = props => {
 /*!*********************************************!*\
   !*** ./node_modules/history/esm/history.js ***!
   \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createBrowserHistory": () => (/* binding */ createBrowserHistory),
-/* harmony export */   "createHashHistory": () => (/* binding */ createHashHistory),
-/* harmony export */   "createLocation": () => (/* binding */ createLocation),
-/* harmony export */   "createMemoryHistory": () => (/* binding */ createMemoryHistory),
-/* harmony export */   "createPath": () => (/* binding */ createPath),
-/* harmony export */   "locationsAreEqual": () => (/* binding */ locationsAreEqual),
-/* harmony export */   "parsePath": () => (/* binding */ parsePath)
+/* harmony export */   "createBrowserHistory": function() { return /* binding */ createBrowserHistory; },
+/* harmony export */   "createHashHistory": function() { return /* binding */ createHashHistory; },
+/* harmony export */   "createLocation": function() { return /* binding */ createLocation; },
+/* harmony export */   "createMemoryHistory": function() { return /* binding */ createMemoryHistory; },
+/* harmony export */   "createPath": function() { return /* binding */ createPath; },
+/* harmony export */   "locationsAreEqual": function() { return /* binding */ locationsAreEqual; },
+/* harmony export */   "parsePath": function() { return /* binding */ parsePath; }
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
 /* harmony import */ var resolve_pathname__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! resolve-pathname */ "./node_modules/resolve-pathname/esm/resolve-pathname.js");
@@ -1386,7 +1566,7 @@ function createMemoryHistory(props) {
 /*!**********************************************************************************!*\
   !*** ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
   \**********************************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
@@ -1500,7 +1680,7 @@ module.exports = hoistNonReactStatics;
 /*!************************************************************************************************!*\
   !*** ./node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.development.js ***!
   \************************************************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
 /** @license React v16.13.1
@@ -1692,7 +1872,7 @@ exports.typeOf = typeOf;
 /*!*****************************************************************************!*\
   !*** ./node_modules/hoist-non-react-statics/node_modules/react-is/index.js ***!
   \*****************************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
@@ -1708,7 +1888,7 @@ if (false) {} else {
 /*!***************************************!*\
   !*** ./node_modules/isarray/index.js ***!
   \***************************************/
-/***/ ((module) => {
+/***/ (function(module) {
 
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
@@ -1721,13 +1901,10 @@ module.exports = Array.isArray || function (arr) {
 /*!******************************************************************!*\
   !*** ./node_modules/mini-create-react-context/dist/esm/index.js ***!
   \******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
@@ -1909,7 +2086,7 @@ function createReactContext(defaultValue, calculateChangedBits) {
 
 var index = (react__WEBPACK_IMPORTED_MODULE_0___default().createContext) || createReactContext;
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (index);
+/* harmony default export */ __webpack_exports__["default"] = (index);
 
 
 /***/ }),
@@ -1918,7 +2095,7 @@ var index = (react__WEBPACK_IMPORTED_MODULE_0___default().createContext) || crea
 /*!****************************!*\
   !*** ./src/css/admin.scss ***!
   \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
@@ -1931,7 +2108,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************!*\
   !*** ./src/css/links.scss ***!
   \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
@@ -1944,7 +2121,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************!*\
   !*** ./src/css/theme.scss ***!
   \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
@@ -1957,7 +2134,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************!*\
   !*** ./src/css/typography.scss ***!
   \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
@@ -1970,7 +2147,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************!*\
   !*** ./src/css/wp-no-ui.scss ***!
   \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
@@ -1983,7 +2160,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************!*\
   !*** ./node_modules/object-assign/index.js ***!
   \*********************************************/
-/***/ ((module) => {
+/***/ (function(module) {
 
 "use strict";
 /*
@@ -2084,7 +2261,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /*!**********************************************!*\
   !*** ./node_modules/path-to-regexp/index.js ***!
   \**********************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 var isarray = __webpack_require__(/*! isarray */ "./node_modules/isarray/index.js")
 
@@ -2520,7 +2697,7 @@ function pathToRegexp (path, keys, options) {
 /*!***************************************************!*\
   !*** ./node_modules/prop-types/checkPropTypes.js ***!
   \***************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 /**
@@ -2634,7 +2811,7 @@ module.exports = checkPropTypes;
 /*!************************************************************!*\
   !*** ./node_modules/prop-types/factoryWithTypeCheckers.js ***!
   \************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 /**
@@ -3255,7 +3432,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /*!******************************************!*\
   !*** ./node_modules/prop-types/index.js ***!
   \******************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -3280,7 +3457,7 @@ if (true) {
 /*!*************************************************************!*\
   !*** ./node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
   \*************************************************************/
-/***/ ((module) => {
+/***/ (function(module) {
 
 "use strict";
 /**
@@ -3303,7 +3480,7 @@ module.exports = ReactPropTypesSecret;
 /*!********************************************!*\
   !*** ./node_modules/prop-types/lib/has.js ***!
   \********************************************/
-/***/ ((module) => {
+/***/ (function(module) {
 
 module.exports = Function.call.bind(Object.prototype.hasOwnProperty);
 
@@ -3314,7 +3491,7 @@ module.exports = Function.call.bind(Object.prototype.hasOwnProperty);
 /*!***********************************************************************************!*\
   !*** ./node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js ***!
   \***********************************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
 /** @license React v16.13.1
@@ -3506,7 +3683,7 @@ exports.typeOf = typeOf;
 /*!****************************************************************!*\
   !*** ./node_modules/prop-types/node_modules/react-is/index.js ***!
   \****************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
@@ -3522,29 +3699,29 @@ if (false) {} else {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "BrowserRouter": () => (/* binding */ BrowserRouter),
-/* harmony export */   "HashRouter": () => (/* binding */ HashRouter),
-/* harmony export */   "Link": () => (/* binding */ Link),
-/* harmony export */   "MemoryRouter": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.MemoryRouter),
-/* harmony export */   "NavLink": () => (/* binding */ NavLink),
-/* harmony export */   "Prompt": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.Prompt),
-/* harmony export */   "Redirect": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.Redirect),
-/* harmony export */   "Route": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.Route),
-/* harmony export */   "Router": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.Router),
-/* harmony export */   "StaticRouter": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.StaticRouter),
-/* harmony export */   "Switch": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.Switch),
-/* harmony export */   "generatePath": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.generatePath),
-/* harmony export */   "matchPath": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.matchPath),
-/* harmony export */   "useHistory": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.useHistory),
-/* harmony export */   "useLocation": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.useLocation),
-/* harmony export */   "useParams": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.useParams),
-/* harmony export */   "useRouteMatch": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.useRouteMatch),
-/* harmony export */   "withRouter": () => (/* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.withRouter)
+/* harmony export */   "BrowserRouter": function() { return /* binding */ BrowserRouter; },
+/* harmony export */   "HashRouter": function() { return /* binding */ HashRouter; },
+/* harmony export */   "Link": function() { return /* binding */ Link; },
+/* harmony export */   "MemoryRouter": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.MemoryRouter; },
+/* harmony export */   "NavLink": function() { return /* binding */ NavLink; },
+/* harmony export */   "Prompt": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.Prompt; },
+/* harmony export */   "Redirect": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.Redirect; },
+/* harmony export */   "Route": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.Route; },
+/* harmony export */   "Router": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.Router; },
+/* harmony export */   "StaticRouter": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.StaticRouter; },
+/* harmony export */   "Switch": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.Switch; },
+/* harmony export */   "generatePath": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.generatePath; },
+/* harmony export */   "matchPath": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.matchPath; },
+/* harmony export */   "useHistory": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.useHistory; },
+/* harmony export */   "useLocation": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.useLocation; },
+/* harmony export */   "useParams": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.useParams; },
+/* harmony export */   "useRouteMatch": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.useRouteMatch; },
+/* harmony export */   "withRouter": function() { return /* reexport safe */ react_router__WEBPACK_IMPORTED_MODULE_0__.withRouter; }
 /* harmony export */ });
 /* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
@@ -3884,27 +4061,27 @@ if (true) {
 /*!*******************************************************!*\
   !*** ./node_modules/react-router/esm/react-router.js ***!
   \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MemoryRouter": () => (/* binding */ MemoryRouter),
-/* harmony export */   "Prompt": () => (/* binding */ Prompt),
-/* harmony export */   "Redirect": () => (/* binding */ Redirect),
-/* harmony export */   "Route": () => (/* binding */ Route),
-/* harmony export */   "Router": () => (/* binding */ Router),
-/* harmony export */   "StaticRouter": () => (/* binding */ StaticRouter),
-/* harmony export */   "Switch": () => (/* binding */ Switch),
-/* harmony export */   "__HistoryContext": () => (/* binding */ historyContext),
-/* harmony export */   "__RouterContext": () => (/* binding */ context),
-/* harmony export */   "generatePath": () => (/* binding */ generatePath),
-/* harmony export */   "matchPath": () => (/* binding */ matchPath),
-/* harmony export */   "useHistory": () => (/* binding */ useHistory),
-/* harmony export */   "useLocation": () => (/* binding */ useLocation),
-/* harmony export */   "useParams": () => (/* binding */ useParams),
-/* harmony export */   "useRouteMatch": () => (/* binding */ useRouteMatch),
-/* harmony export */   "withRouter": () => (/* binding */ withRouter)
+/* harmony export */   "MemoryRouter": function() { return /* binding */ MemoryRouter; },
+/* harmony export */   "Prompt": function() { return /* binding */ Prompt; },
+/* harmony export */   "Redirect": function() { return /* binding */ Redirect; },
+/* harmony export */   "Route": function() { return /* binding */ Route; },
+/* harmony export */   "Router": function() { return /* binding */ Router; },
+/* harmony export */   "StaticRouter": function() { return /* binding */ StaticRouter; },
+/* harmony export */   "Switch": function() { return /* binding */ Switch; },
+/* harmony export */   "__HistoryContext": function() { return /* binding */ historyContext; },
+/* harmony export */   "__RouterContext": function() { return /* binding */ context; },
+/* harmony export */   "generatePath": function() { return /* binding */ generatePath; },
+/* harmony export */   "matchPath": function() { return /* binding */ matchPath; },
+/* harmony export */   "useHistory": function() { return /* binding */ useHistory; },
+/* harmony export */   "useLocation": function() { return /* binding */ useLocation; },
+/* harmony export */   "useParams": function() { return /* binding */ useParams; },
+/* harmony export */   "useRouteMatch": function() { return /* binding */ useRouteMatch; },
+/* harmony export */   "withRouter": function() { return /* binding */ withRouter; }
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
@@ -4692,7 +4869,7 @@ if (true) {
 /*!*************************************************************************************!*\
   !*** ./node_modules/react-router/node_modules/react-is/cjs/react-is.development.js ***!
   \*************************************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
 /** @license React v16.13.1
@@ -4884,7 +5061,7 @@ exports.typeOf = typeOf;
 /*!******************************************************************!*\
   !*** ./node_modules/react-router/node_modules/react-is/index.js ***!
   \******************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
@@ -4900,13 +5077,10 @@ if (false) {} else {
 /*!***************************************************************!*\
   !*** ./node_modules/resolve-pathname/esm/resolve-pathname.js ***!
   \***************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 function isAbsolute(pathname) {
   return pathname.charAt(0) === '/';
 }
@@ -4981,7 +5155,7 @@ function resolvePathname(to, from) {
   return result;
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (resolvePathname);
+/* harmony default export */ __webpack_exports__["default"] = (resolvePathname);
 
 
 /***/ }),
@@ -4990,12 +5164,12 @@ function resolvePathname(to, from) {
 /*!****************************************************************!*\
   !*** ./node_modules/tiny-invariant/dist/tiny-invariant.esm.js ***!
   \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ invariant)
+/* harmony export */   "default": function() { return /* binding */ invariant; }
 /* harmony export */ });
 var isProduction = "development" === 'production';
 var prefix = 'Invariant failed';
@@ -5020,13 +5194,10 @@ function invariant(condition, message) {
 /*!************************************************************!*\
   !*** ./node_modules/tiny-warning/dist/tiny-warning.esm.js ***!
   \************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 var isProduction = "development" === 'production';
 function warning(condition, message) {
   if (!isProduction) {
@@ -5046,7 +5217,7 @@ function warning(condition, message) {
   }
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (warning);
+/* harmony default export */ __webpack_exports__["default"] = (warning);
 
 
 /***/ }),
@@ -5055,13 +5226,10 @@ function warning(condition, message) {
 /*!*****************************************************!*\
   !*** ./node_modules/value-equal/esm/value-equal.js ***!
   \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 function valueOf(obj) {
   return obj.valueOf ? obj.valueOf() : Object.prototype.valueOf.call(obj);
 }
@@ -5097,7 +5265,7 @@ function valueEqual(a, b) {
   return false;
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (valueEqual);
+/* harmony default export */ __webpack_exports__["default"] = (valueEqual);
 
 
 /***/ }),
@@ -5106,7 +5274,7 @@ function valueEqual(a, b) {
 /*!************************!*\
   !*** external "React" ***!
   \************************/
-/***/ ((module) => {
+/***/ (function(module) {
 
 "use strict";
 module.exports = window["React"];
@@ -5117,7 +5285,7 @@ module.exports = window["React"];
 /*!**********************************!*\
   !*** external ["wp","apiFetch"] ***!
   \**********************************/
-/***/ ((module) => {
+/***/ (function(module) {
 
 "use strict";
 module.exports = window["wp"]["apiFetch"];
@@ -5128,7 +5296,7 @@ module.exports = window["wp"]["apiFetch"];
 /*!************************************!*\
   !*** external ["wp","components"] ***!
   \************************************/
-/***/ ((module) => {
+/***/ (function(module) {
 
 "use strict";
 module.exports = window["wp"]["components"];
@@ -5139,7 +5307,7 @@ module.exports = window["wp"]["components"];
 /*!*********************************!*\
   !*** external ["wp","element"] ***!
   \*********************************/
-/***/ ((module) => {
+/***/ (function(module) {
 
 "use strict";
 module.exports = window["wp"]["element"];
@@ -5150,7 +5318,7 @@ module.exports = window["wp"]["element"];
 /*!******************************!*\
   !*** external ["wp","i18n"] ***!
   \******************************/
-/***/ ((module) => {
+/***/ (function(module) {
 
 "use strict";
 module.exports = window["wp"]["i18n"];
@@ -5161,12 +5329,12 @@ module.exports = window["wp"]["i18n"];
 /*!************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/extends.js ***!
   \************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _extends)
+/* harmony export */   "default": function() { return /* binding */ _extends; }
 /* harmony export */ });
 function _extends() {
   _extends = Object.assign ? Object.assign.bind() : function (target) {
@@ -5191,12 +5359,12 @@ function _extends() {
 /*!******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js ***!
   \******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _inheritsLoose)
+/* harmony export */   "default": function() { return /* binding */ _inheritsLoose; }
 /* harmony export */ });
 /* harmony import */ var _setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setPrototypeOf.js */ "./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js");
 
@@ -5212,12 +5380,12 @@ function _inheritsLoose(subClass, superClass) {
 /*!*********************************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js ***!
   \*********************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _objectWithoutPropertiesLoose)
+/* harmony export */   "default": function() { return /* binding */ _objectWithoutPropertiesLoose; }
 /* harmony export */ });
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
@@ -5240,12 +5408,12 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 /*!*******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js ***!
   \*******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _setPrototypeOf)
+/* harmony export */   "default": function() { return /* binding */ _setPrototypeOf; }
 /* harmony export */ });
 function _setPrototypeOf(o, p) {
   _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
@@ -5285,31 +5453,31 @@ function _setPrototypeOf(o, p) {
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
+/******/ 	!function() {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
+/******/ 		__webpack_require__.n = function(module) {
 /******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
 /******/ 		};
-/******/ 	})();
+/******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
+/******/ 	!function() {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 		__webpack_require__.d = function(exports, definition) {
 /******/ 			for(var key in definition) {
 /******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
 /******/ 		};
-/******/ 	})();
+/******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
+/******/ 	!function() {
 /******/ 		__webpack_require__.g = (function() {
 /******/ 			if (typeof globalThis === 'object') return globalThis;
 /******/ 			try {
@@ -5318,47 +5486,49 @@ function _setPrototypeOf(o, p) {
 /******/ 				if (typeof window === 'object') return window;
 /******/ 			}
 /******/ 		})();
-/******/ 	})();
+/******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
+/******/ 	!function() {
 /******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
+/******/ 		__webpack_require__.r = function(exports) {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	})();
+/******/ 	}();
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
+!function() {
 "use strict";
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _css_theme_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./css/theme.scss */ "./src/css/theme.scss");
-/* harmony import */ var _css_wp_no_ui_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./css/wp-no-ui.scss */ "./src/css/wp-no-ui.scss");
-/* harmony import */ var _css_admin_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/admin.scss */ "./src/css/admin.scss");
-/* harmony import */ var _css_typography_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./css/typography.scss */ "./src/css/typography.scss");
-/* harmony import */ var _css_links_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./css/links.scss */ "./src/css/links.scss");
-/* harmony import */ var _onboarding__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./onboarding */ "./src/onboarding/index.js");
+/* harmony import */ var _css_theme_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @css/theme.scss */ "./src/css/theme.scss");
+/* harmony import */ var _css_wp_no_ui_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @css/wp-no-ui.scss */ "./src/css/wp-no-ui.scss");
+/* harmony import */ var _css_admin_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @css/admin.scss */ "./src/css/admin.scss");
+/* harmony import */ var _css_typography_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @css/typography.scss */ "./src/css/typography.scss");
+/* harmony import */ var _css_links_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @css/links.scss */ "./src/css/links.scss");
+/* harmony import */ var _ui_onboarding__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ui/onboarding */ "./src/renders/onboarding/index.js");
+// All the css stuff.
 
 
 
 
 
 
-})();
+// Display onboarding.
 
+}();
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map

@@ -17,10 +17,13 @@ import {
 
 import { withRouter } from 'react-router';
 
-const OnboardingLists = props => {
+import { useFocus } from '@helpers/use-focus';
 
-	const {state, setState} = props;
-	const {admin_first_name, api_url} = mailerglue_backend;
+const Settings = props => {
+
+	const { state, setState, updateState } = props;
+
+	const { api_url, words } = mailerglue_backend;
 
 	const saveBasicSettings = (e) => {
 
@@ -63,7 +66,7 @@ const OnboardingLists = props => {
 	};
 
 	useEffect(() => {
-
+		console.log( state );
 	}, []);
 
 	return (
@@ -86,9 +89,8 @@ const OnboardingLists = props => {
 		<PanelBody className="mailerglue-panelbody-form">
 			<PanelRow>
 				<InputControl
-					autoFocus
-					label={ __( 'From name', 'mailerglue' ) }
-					placeholder={ __( 'ABC Productions, Inc.', 'mailerglue' ) }
+					label="From name"
+					placeholder="ABC Productions, Inc."
 					value={ state.from_name }
 					onChange={
 						( value ) => {
@@ -102,9 +104,9 @@ const OnboardingLists = props => {
 			<p className="components-base-control__help">Your subscribers will see this name in their inboxes.</p>
 			<PanelRow>
 				<InputControl
-					label={ __( 'From email', 'mailerglue' ) }
+					label="From email"
 					type="email"
-					placeholder={ __( 'name@domain.com', 'mailerglue' ) }
+					placeholder="name@domain.com"
 					value={ state.from_email }
 					required
 					onChange={
@@ -126,7 +128,7 @@ const OnboardingLists = props => {
 					isBusy={ state.sending }
 					onClick={ saveBasicSettings }
 					>
-					{ __( 'Save & continue', 'mailerglue' ) }
+					Save & continue
 				</Button>
 			</PanelRow>
 		</PanelBody>
@@ -137,4 +139,4 @@ const OnboardingLists = props => {
 
 }
 
-export default withRouter(OnboardingLists);
+export default withRouter(Settings);

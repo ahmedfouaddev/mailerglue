@@ -182,7 +182,7 @@ body.mailerglue-no-wp-ui #wpbody-content {
   box-shadow: none;
 }
 .mailerglue-ui .components-button.is-primary:not([aria-disabled=true]):active {
-  color: rgba(255, 255, 255, 0.4);
+  color: #fff;
 }
 .mailerglue-ui .components-button.is-primary.is-busy, .mailerglue-ui .components-button.is-primary.is-busy:disabled, .mailerglue-ui .components-button.is-primary.is-busy[aria-disabled=true] {
   background-image: linear-gradient(-45deg, var(--mailerglue-primary-lighter-10) 33%, var(--mailerglue-primary) 33%, var(--mailerglue-primary) 70%, var(--mailerglue-primary-lighter-10) 70%);
