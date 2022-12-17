@@ -23,10 +23,15 @@ class General {
 	 * Modify the body tag classes.
 	 */
 	public function admin_body_class( $classes ) {
+		global $post_type;
 
 		$page = isset( $_GET[ 'page' ] ) ? sanitize_text_field( $_GET[ 'page' ] ) : '';
 
 		if ( $page && strstr( $page, 'mailerglue' ) ) {
+			$classes .= ' mailerglue-admin';
+		}
+
+		if ( $post_type && strstr( $post_type, 'mailerglue' ) ) {
 			$classes .= ' mailerglue-admin';
 		}
 

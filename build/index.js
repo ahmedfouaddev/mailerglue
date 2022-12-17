@@ -2117,6 +2117,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/css/tabs.scss":
+/*!***************************!*\
+  !*** ./src/css/tabs.scss ***!
+  \***************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./src/css/theme.scss":
 /*!****************************!*\
   !*** ./src/css/theme.scss ***!
@@ -2147,6 +2160,19 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************!*\
   !*** ./src/css/wp-no-ui.scss ***!
   \*******************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./src/css/wp.scss":
+/*!*************************!*\
+  !*** ./src/css/wp.scss ***!
+  \*************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5518,8 +5544,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _css_admin_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @css/admin.scss */ "./src/css/admin.scss");
 /* harmony import */ var _css_typography_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @css/typography.scss */ "./src/css/typography.scss");
 /* harmony import */ var _css_links_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @css/links.scss */ "./src/css/links.scss");
-/* harmony import */ var _ui_onboarding__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ui/onboarding */ "./src/renders/onboarding/index.js");
+/* harmony import */ var _css_wp_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @css/wp.scss */ "./src/css/wp.scss");
+/* harmony import */ var _css_tabs_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @css/tabs.scss */ "./src/css/tabs.scss");
+/* harmony import */ var _ui_onboarding__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ui/onboarding */ "./src/renders/onboarding/index.js");
 // All the css stuff.
+
+
 
 
 

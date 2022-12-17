@@ -120,9 +120,12 @@ final class MailerGlue {
 	public function includes() {
 		global $mailerglue_options;
 
-		$this->options = new MailerGlue\Options;
-		$this->install = new MailerGlue\Install;
+		require_once MAILERGLUE_PLUGIN_DIR . 'includes/functions.php';
+
+		$this->options 	= new MailerGlue\Options;
+		$this->install 	= new MailerGlue\Install;
 		$this->api		= new MailerGlue\API();
+		$this->types	= new MailerGlue\Types();
 
 		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 			$this->admin_menus 		= new MailerGlue\Admin\Menus;

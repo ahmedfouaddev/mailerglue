@@ -1,0 +1,46 @@
+.mailerglue-ui {
+
+	.mailerglue-tabs {
+		margin: 25px;
+		background: #fff;
+		border: 1px solid #e2e4e7;
+		padding: 0;
+		ul {
+		    margin: 0;
+			padding: 0 0 0 15px;
+			display: flex;
+			li {
+			    display: flex;
+				align-items: center;
+				padding: 0;
+				margin: 0 15px;
+			}
+		}
+		.components-panel__row {
+		    margin: 0;
+			align-items: flex-start;
+			padding: 0;
+		}
+		.components-button {
+			min-width: auto;
+			display: inline-flex;
+			justify-content: center;
+			line-height: 1.6;
+			font-size: 14px;
+			font-weight: 400 !important;
+			text-decoration: none !important;
+			padding: 15px 0 !important;
+			border-top: 3px solid transparent !important;
+			color: var(--mailerglue-primary-lighter-20);
+			box-shadow: none !important;
+			&:hover {
+				color: var(--mailerglue-primary);
+			}
+			&.mailerglue-active {
+			    color: #333 !important;
+				border-bottom: 3px solid #333 !important;
+			}
+		}
+	}
+
+}

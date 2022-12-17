@@ -15,8 +15,37 @@ class Scripts {
 	 */
 	public function __construct() {
 
+		add_action( 'load-edit.php', array( $this, 'output_before_admin' ), 1 );
+
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 9 );
 
+		add_filter( 'screen_options_show_screen', array( $this, 'screen_options_show_screen' ), 99 );
+	}
+
+	/**
+	 * Add content that runs before everything.
+	 */
+	public function output_before_admin() {
+		global $post_type, $pagenow;
+
+		$screen = get_current_screen();
+
+		if ( ! empty( $screen->id ) && strstr( $screen->id, 'edit-mailerglue' ) ) {
+			add_action( 'all_admin_notices', array( $this, 'add_top_bar' ), 10 );
+		}
+
+	}
+
+	/**
+	 * Add top bar content.
+	 */
+	public function add_top_bar() {
+
+		$screen = get_current_screen();
+
+		if ( ! empty( $screen->id ) && strstr( $screen->id, 'edit-mailerglue' ) ) {
+			do_action( $screen->id );
+		}
 	}
 
 	/**
@@ -51,6 +80,19 @@ class Scripts {
 
 		wp_register_style( 'mailerglue-backend', MAILERGLUE_PLUGIN_URL . 'build/index.css', array( 'wp-components' ), MAILERGLUE_VERSION );
 		wp_enqueue_style( 'mailerglue-backend' );
+	}
+
+	/**
+	 * Hide screen options button.
+	 */
+	public function screen_options_show_screen( $show_screen ) {
+		global $post_type;
+
+		if ( ! empty( $post_type ) && strstr( $post_type, 'mailerglue' ) ) {
+			return false;
+		}
+
+		return $show_screen;
 	}
 
 }

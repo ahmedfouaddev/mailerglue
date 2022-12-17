@@ -19,6 +19,9 @@ class Menus {
 
 		add_action( 'admin_menu', array( $this, 'menu_order_fix' ), 1000 );
 		add_action( 'admin_menu_editor-menu_replaced', array( $this, 'menu_order_fix' ), 1000 );
+
+		add_filter( 'parent_file', array( $this, 'parent_file' ), 10 );
+		add_filter( 'submenu_file', array( $this, 'highlight_menu_item' ), 50 );
 	}
 
 	/**
@@ -28,23 +31,19 @@ class Menus {
 
 		$get_menu_icon = $this->get_menu_icon();
 
-		$onboarding = new \MailerGlue\Admin\Onboarding;
+		$onboarding 	= new \MailerGlue\Admin\Onboarding;
+		$subscribers 	= new \MailerGlue\Admin\Subscribers;
+		$lists 			= new \MailerGlue\Admin\Lists;
+		$campaigns 		= new \MailerGlue\Admin\Campaigns;
+		$settings 		= new \MailerGlue\Admin\Settings;
 
 		add_menu_page( __( 'Mailer Glue', 'mailerglue' ), __( 'Mailer Glue', 'mailerglue' ), 'manage_options', 'mailerglue', null, $get_menu_icon, '25.5471' );
 
 		add_submenu_page( '_mailerglue', __( 'Set up Mailer Glue', 'mailerglue' ), __( 'Set up Mailer Glue', 'mailerglue' ), 'manage_options', 'mailerglue-onboarding', array( $onboarding, 'output' ) );
-		add_submenu_page( 'mailerglue', __( 'Emails', 'mailerglue' ), __( 'Emails', 'mailerglue' ), 'manage_options', 'edit.php?post_type=mailerglue_emails' );
-		add_submenu_page( 'mailerglue', __( 'Subscribers', 'mailerglue' ), __( 'Subscribers', 'mailerglue' ), 'manage_options', 'mailerglue-subscribers', array( $this, 'output_subscribers' ) );
-		add_submenu_page( 'mailerglue', __( 'Settings', 'mailerglue' ), __( 'Settings', 'mailerglue' ), 'manage_options', 'mailerglue-settings', array( $this, 'output_settings' ) );
+		add_submenu_page( 'mailerglue', __( 'Emails', 'mailerglue' ), __( 'Emails', 'mailerglue' ), 'manage_options', 'edit.php?post_type=mailerglue_email' );
+		add_submenu_page( 'mailerglue', __( 'Subscribers', 'mailerglue' ), __( 'Subscribers', 'mailerglue' ), 'manage_options', 'mailerglue-subscribers', array( $subscribers, 'output' ) );
+		add_submenu_page( 'mailerglue', __( 'Settings', 'mailerglue' ), __( 'Settings', 'mailerglue' ), 'manage_options', 'mailerglue-settings', array( $settings, 'output' ) );
 
-	}
-
-	public function output_settings() {
-		echo 'test';
-	}
-
-	public function output_subscribers() {
-		echo 'test';
 	}
 
 	/**
@@ -71,6 +70,33 @@ class Menus {
 	 */
 	public function get_menu_icon() {
 		return 'data:image/svg+xml;base64,' . '';
+	}
+
+	/**
+	 * Display in correct menu parent.
+	 */
+	public function parent_file() {
+		global $plugin_page, $submenu_file, $parent_file;
+
+		if ( $submenu_file === 'edit.php?post_type=mailerglue_list' ) {
+			$parent_file = 'mailerglue-subscribers';
+			$plugin_page = 'mailerglue-subscribers';
+		}
+
+		return $parent_file;
+	}
+
+	/**
+	 * Highlight correct menu item.
+	 */
+	public function highlight_menu_item( $submenu_file ) {
+
+		if ( $submenu_file === 'edit.php?post_type=mailerglue_list' ) {
+			return 'mailerglue-subscribers';
+		}
+
+		// Don't change anything
+		return $submenu_file;
 	}
 
 }
