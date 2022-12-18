@@ -48,6 +48,14 @@ class Activate {
 		$result 	= wp_remote_post( MAILERGLUE_REMOTE_APP . '/activate', $args );
 		$response 	= json_decode( wp_remote_retrieve_body( $result ), true );
 
+		// Create default lists in background.
+		if ( ! empty( $response[ 'success' ] ) ) {
+			$options = new \MailerGlue\Options;
+
+			$lists = new \MailerGlue\Lists;
+			$lists->create_default_lists( $options->get_field( 'from_name' ) );
+		}
+
 		return rest_ensure_response( $response );
 	}
 

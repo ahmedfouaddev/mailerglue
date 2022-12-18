@@ -10,40 +10,51 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 class Lists {
 
-	private $prefix;
-	private $table;
-
 	/**
 	 * Construct.
 	 */
 	public function __construct() {
-		global $wpdb;
 
-		$this->prefix = $wpdb->prefix . 'mailerglue_';
-		$this->table  = $this->prefix . 'lists';
 	}
 
 	/**
-	 * Add a list.
+	 * Create default lists.
 	 */
-	public function add_list( $args = array() ) {
-		global $wpdb;
+	public function create_default_lists( $name = '' ) {
+		global $current_user;
 
-		$name = ! empty( $args[ 'name' ] ) ? $args[ 'name' ] : '';
+		$post = new \MailerGlue\Post;
 
-		$wpdb->insert( $this->table, array(
-			'name'			=> $name,
-			'create_time'	=> current_time( 'mysql', 1 ),
-		) );
-	}
+		$default_list1 = $post->post_exists_by_meta( 'mailerglue_list', '_default1', 'yes' );
+		$default_list2 = $post->post_exists_by_meta( 'mailerglue_list', '_default2', 'yes' );
 
-	/**
-	 * Remove a list.
-	 */
-	public function remove_list( $list_id = 0 ) {
-		global $wpdb;
+		if ( ! $default_list1 ) {
 
-		$wpdb->delete( $this->table, array( 'list_id' => $list_id ) );
+			$args = array(
+				'post_type' 	=> 'mailerglue_list',
+				'post_status'	=> 'publish',
+				'post_author'	=> $current_user->ID,
+				'post_title'	=> sprintf( __( '%s&rsquo;s List', 'mailerglue' ), esc_html( $name ) ),
+			);
+
+			$default_list1 = $post->create_item( $args );
+
+			$post->update_meta( $default_list1, array( '_default1' => 'yes' ) );
+		}
+
+		if ( ! $default_list2 ) {
+			$args = array(
+				'post_type' 	=> 'mailerglue_list',
+				'post_status'	=> 'publish',
+				'post_author'	=> $current_user->ID,
+				'post_title'	=> __( 'Test', 'mailerglue' ),
+			);
+
+			$default_list2 = $post->create_item( $args );
+			
+			$post->update_meta( $default_list2, array( '_default2' => 'yes' ) );
+		}
+
 	}
 
 }

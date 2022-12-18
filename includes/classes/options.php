@@ -45,6 +45,19 @@ class Options {
 	}
 
 	/**
+	 * Returns an option.
+	 */
+	public function get_field( $field = '' ) {
+		global $mailerglue_options;
+
+		if ( isset( $mailerglue_options[ $field ] ) ) {
+			return $mailerglue_options[ $field ];
+		}
+
+		return false;
+	}
+
+	/**
 	 * Has a field?
 	 */
 	public function has_field( $id ) {
