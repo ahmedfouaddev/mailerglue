@@ -30,8 +30,8 @@ class Lists {
 		$mailerglue_tabs = new \MailerGlue\Admin\Tabs;
 
 		$tabs = array(
-			'admin.php?page=mailerglue-subscribers' => __( 'Subscribers', 'mailerglue' ),
-			'edit.php?post_type=mailerglue_list'	=> __( 'Lists', 'mailerglue' ),
+			'mailerglue-subscribers' 	=> __( 'Subscribers', 'mailerglue' ),
+			'mailerglue_list'			=> __( 'Lists', 'mailerglue' ),
 		);
 
 		$mailerglue_tabs->output( $tabs );
