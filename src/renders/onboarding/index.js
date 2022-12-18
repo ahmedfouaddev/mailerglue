@@ -19,6 +19,7 @@ export const Onboarding = props => {
 		password: '',
 		loginEmail: '',
 		loginPassword: '',
+		activationCode: '',
 		errors: [],
 		sending: false,
 		access_token: a.access_token,

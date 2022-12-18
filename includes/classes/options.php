@@ -17,8 +17,6 @@ class Options {
 		global $mailerglue_options;
 
 		$mailerglue_options = get_option( 'mailerglue_options' );
-
-		//delete_option( 'mailerglue_options' );
 	}
 
 	/**
@@ -70,7 +68,6 @@ class Options {
 				$mailerglue_options[ $key ] = $value;
 			}
 		} else {
-
 			$mailerglue_options[ $id ] = $values;
 		}
 

@@ -20,7 +20,7 @@ class Onboarding {
 	}
 
 	/**
-	 * Trigger onboarding.
+	 * Trigger.
 	 */
 	public function trigger_onboarding() {
 
@@ -44,7 +44,7 @@ class Onboarding {
 	}
 
 	/**
-	 * Show onboarding content.
+	 * Show output.
 	 */
 	public function output() {
 		?>

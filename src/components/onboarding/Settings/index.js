@@ -23,7 +23,7 @@ const Settings = props => {
 
 	const { state, setState, updateState } = props;
 
-	const { api_url, words } = mailerglue_backend;
+	const { api_url } = mailerglue_backend;
 
 	const saveBasicSettings = (e) => {
 
@@ -66,7 +66,7 @@ const Settings = props => {
 	};
 
 	useEffect(() => {
-		console.log( state );
+
 	}, []);
 
 	return (

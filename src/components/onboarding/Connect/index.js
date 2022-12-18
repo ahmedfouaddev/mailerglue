@@ -25,11 +25,13 @@ const Connect = props => {
 
 	const { state, setState, updateState } = props;
 
-	const { api_url, words } = mailerglue_backend;
+	const { api_url, welcome } = mailerglue_backend;
 
 	const [ emailInputRef, setEmailInputRef ] = useFocus();
 
 	const doAPI = (e) => {
+
+		event.preventDefault();
 
 		updateState( 'sending', true );
 
@@ -41,16 +43,16 @@ const Connect = props => {
 				password: state.loginPassword,
 			},
 		} ).then(
-			(response) => {
+			( response ) => {
 				if ( ! response.success ) {
 					updateState( 'array', { sending: false, errors: { login: response.message }, access_token: '', loginPassword: '' } );
 					setEmailInputRef();
 				} else {
-					updateState( 'array', { sending: false, errors: { login: '' }, access_token: response, from_name: response.name, from_email: response.email } );
-					props.history.push('/settings');
+					updateState( 'array', { sending: false, errors: { login: '' }, access_token: response, from_name: response.name, from_email: response.email, loginPassword: '' } );
+					props.history.push( '/' + response.flow );
 				}
 			},
-			(error) => {
+			( error ) => {
 				updateState( 'array', { sending: false, errors: { login: error.message }, access_token: '', loginPassword: '' } );
 			}
 		);
@@ -64,12 +66,12 @@ const Connect = props => {
 	return (
 		<>
 
-		<Heading level={5} className="mailerglue-text-regular">{ words.welcome }</Heading>
+		<Heading level={5} className="mailerglue-text-regular">{ welcome }</Heading>
 
-		<Heading level={2}>{ words.login_heading }</Heading>
+		<Heading level={2}>Let’s begin by connecting your Mailer Glue account</Heading>
 
 		<p className="mailerglue-text-bigger">
-			{ words.no_account_yet } <Link to="/signup">{ words.signup }</Link>
+			Don’t have an account yet? <Link to="/signup">Sign up</Link>
 		</p>
 
 		<Spacer paddingTop={10} marginBottom={0} />
@@ -83,7 +85,7 @@ const Connect = props => {
 		<PanelBody className="mailerglue-panelbody-form">
 			<PanelRow>
 				<InputControl
-					placeholder={ words.email_label }
+					placeholder="Email address"
 					value={ state.loginEmail }
 					onChange={ (value) => { updateState( 'loginEmail', value ) } }
 					ref={ emailInputRef }
@@ -91,7 +93,7 @@ const Connect = props => {
 			</PanelRow>
 			<PanelRow>
 				<InputControl
-					placeholder={ words.password_label }
+					placeholder="Password"
 					type="password"
 					value={ state.loginPassword }
 					onChange={ (value) => { updateState( 'loginPassword', value ) } }
@@ -106,7 +108,7 @@ const Connect = props => {
 					isBusy={ state.sending }
 					onClick={ doAPI }
 					>
-					{ words.connect }
+					Connect your Mailer Glue account
 				</Button>
 			</PanelRow>
 		</PanelBody>

@@ -64,12 +64,15 @@ class Scripts {
 		$options_api 	= new \MailerGlue\Options;
 		$options		= $options_api->get();
 
-		$words_api		= new \MailerGlue\Words;
-		$words			= $words_api->get( $user );
+		if ( ! empty( $user ) && ! empty( $user->get_first_name() ) ) {
+			$welcome = sprintf( __( 'Welcome, %s!', 'mailerglue' ), ucfirst( $user->get_first_name() ) );
+		} else {
+			$welcome = __( 'Welcome!', 'mailerglue' );
+		}
 
 		$args = array(
 			'api_url'				=> 'mailerglue/' . MAILERGLUE_API_VERSION,
-			'words'					=> $words,
+			'welcome'				=> $welcome,
 		);
 
 		foreach( $options as $key => $value ) {

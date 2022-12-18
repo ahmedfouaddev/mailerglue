@@ -25,7 +25,7 @@ const Signup = props => {
 
 	const { state, setState } = props;
 
-	const { api_url, words } = mailerglue_backend;
+	const { api_url } = mailerglue_backend;
 
 	const [ emailInputRef, setEmailInputRef ] = useFocus();
 
@@ -75,10 +75,10 @@ const Signup = props => {
 	return (
 		<>
 
-		<Heading level={2}>{ words.signup_heading }</Heading>
+		<Heading level={2}>Sign up for a free Mailer Glue account</Heading>
 
 		<p className="mailerglue-text-bigger">
-			{ words.signup_text }
+			It only takes some minutes. Get up to 500 emails for free once you finish registration.
 		</p>
 
 		<Spacer paddingTop={10} marginBottom={0} />
@@ -92,7 +92,7 @@ const Signup = props => {
 		<PanelBody className="mailerglue-panelbody-form">
 			<PanelRow>
 				<InputControl
-					placeholder={ words.email_label }
+					placeholder="Email address"
 					value={ state.email }
 					onChange={
 						( value ) => {
@@ -106,7 +106,7 @@ const Signup = props => {
 			</PanelRow>
 			<PanelRow>
 				<InputControl
-					placeholder={ words.password_label }
+					placeholder="Password"
 					type="password"
 					value={ state.password }
 					onChange={
@@ -127,7 +127,7 @@ const Signup = props => {
 					isBusy={ state.sending }
 					onClick={ doAPIRequest }
 					>
-					{ words.signup }
+					Sign up
 				</Button>
 			</PanelRow>
 		</PanelBody>
