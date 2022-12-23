@@ -193,11 +193,17 @@ body.mailerglue-no-wp-ui #wpbody-content {
 /*!****************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/css/wp.scss ***!
   \****************************************************************************************************************************************************************************************************************************************/
+.mailerglue-admin.post-type-mailerglue_list.post-php .wrap, .mailerglue-admin.post-type-mailerglue_list.post-new-php .wrap, .mailerglue-admin.post-type-mailerglue_user.post-php .wrap, .mailerglue-admin.post-type-mailerglue_user.post-new-php .wrap {
+  display: none;
+}
 .mailerglue-admin #wpcontent {
   padding: 0;
 }
 .mailerglue-admin .wrap {
   margin: 25px;
+}
+.mailerglue-admin .wrap h1.wp-heading-inline {
+  padding: 0;
 }
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/css/tabs.scss ***!
@@ -234,6 +240,7 @@ body.mailerglue-no-wp-ui #wpbody-content {
   text-decoration: none !important;
   padding: 15px 0 !important;
   border-top: 3px solid transparent !important;
+  border-bottom: 3px solid transparent;
   color: var(--mailerglue-primary-lighter-20);
   box-shadow: none !important;
 }

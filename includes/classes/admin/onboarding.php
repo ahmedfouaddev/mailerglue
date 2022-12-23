@@ -24,12 +24,23 @@ class Onboarding {
 	 */
 	public function trigger_onboarding() {
 
+		$options = new \MailerGlue\Options;
+
+		if ( $options->get_admin_action() === 'skip_onboarding' ) {
+			$options->update( 'data', array( 'skip_onboarding' => 'true' ) );
+		}
+
 		// Setup wizard redirect.
 		if ( get_transient( '_mailerglue_onboarding' ) ) {
-			$do_redirect  = true;
+			$do_redirect = true;
 
 			// On these pages, or during these events, postpone the redirect.
 			if ( wp_doing_ajax() || is_network_admin() || ! current_user_can( 'manage_options' ) ) {
+				$do_redirect = false;
+			}
+
+			if ( $options->has_field( 'skip_onboarding' ) ) {
+				delete_transient( '_mailerglue_onboarding' );
 				$do_redirect = false;
 			}
 

@@ -41,7 +41,7 @@ class Menus {
 
 		add_submenu_page( '_mailerglue', __( 'Set up Mailer Glue', 'mailerglue' ), __( 'Set up Mailer Glue', 'mailerglue' ), 'manage_options', 'mailerglue-onboarding', array( $onboarding, 'output' ) );
 		add_submenu_page( 'mailerglue', __( 'Emails', 'mailerglue' ), __( 'Emails', 'mailerglue' ), 'manage_options', 'edit.php?post_type=mailerglue_email' );
-		add_submenu_page( 'mailerglue', __( 'Subscribers', 'mailerglue' ), __( 'Subscribers', 'mailerglue' ), 'manage_options', 'mailerglue-subscribers', array( $subscribers, 'output' ) );
+		add_submenu_page( 'mailerglue', __( 'Subscribers', 'mailerglue' ), __( 'Subscribers', 'mailerglue' ), 'manage_options', 'edit.php?post_type=mailerglue_user' );
 		add_submenu_page( 'mailerglue', __( 'Settings', 'mailerglue' ), __( 'Settings', 'mailerglue' ), 'manage_options', 'mailerglue-settings', array( $settings, 'output' ) );
 
 	}
@@ -78,9 +78,14 @@ class Menus {
 	public function parent_file() {
 		global $plugin_page, $submenu_file, $parent_file;
 
-		if ( $submenu_file === 'edit.php?post_type=mailerglue_list' ) {
-			$parent_file = 'mailerglue-subscribers';
-			$plugin_page = 'mailerglue-subscribers';
+		if ( in_array( $submenu_file, array( 'edit.php?post_type=mailerglue_email', 'post-new.php?post_type=mailerglue_email' ) ) ) {
+			$parent_file = 'edit.php?post_type=mailerglue_email';
+			$plugin_page = 'edit.php?post_type=mailerglue_email';
+		}
+
+		if ( in_array( $submenu_file, array( 'edit.php?post_type=mailerglue_list', 'post-new.php?post_type=mailerglue_list', 'edit.php?post_type=mailerglue_user', 'post-new.php?post_type=mailerglue_user' ) ) ) {
+			$parent_file = 'edit.php?post_type=mailerglue_user';
+			$plugin_page = 'edit.php?post_type=mailerglue_user';
 		}
 
 		return $parent_file;
@@ -91,8 +96,12 @@ class Menus {
 	 */
 	public function highlight_menu_item( $submenu_file ) {
 
-		if ( $submenu_file === 'edit.php?post_type=mailerglue_list' ) {
-			return 'mailerglue-subscribers';
+		if ( in_array( $submenu_file, array( 'edit.php?post_type=mailerglue_email', 'post-new.php?post_type=mailerglue_email' ) ) ) {
+			return 'edit.php?post_type=mailerglue_email';
+		}
+
+		if ( in_array( $submenu_file, array( 'edit.php?post_type=mailerglue_list', 'post-new.php?post_type=mailerglue_list', 'edit.php?post_type=mailerglue_user', 'post-new.php?post_type=mailerglue_user' ) ) ) {
+			return 'edit.php?post_type=mailerglue_user';
 		}
 
 		// Don't change anything

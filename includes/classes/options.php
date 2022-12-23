@@ -41,6 +41,8 @@ class Options {
 			$mailerglue_options[ 'access_token' ] = array();
 		}
 
+		$mailerglue_options[ 'skip_onboarding_url' ] = $this->get_skip_onboarding_url();
+
 		return $mailerglue_options;
 	}
 
@@ -98,6 +100,25 @@ class Options {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Get the skip onboarding URL.
+	 */
+	public function get_skip_onboarding_url() {
+
+		$url = admin_url( 'edit.php?post_type=mailerglue_email' );
+
+		$url = add_query_arg( 'mailerglue_action', 'skip_onboarding', $url );
+
+		return apply_filters( 'mailerglue_get_skip_onboarding_url', $url );
+	}
+
+	/**
+	 * Get admin action.
+	 */
+	public function get_admin_action() {
+		return current_user_can( 'manage_options' ) && isset( $_GET[ 'mailerglue_action' ] ) && ! empty( $_GET[ 'mailerglue_action' ] ) ? sanitize_text_field( $_GET[ 'mailerglue_action' ] ) : '';
 	}
 
 }

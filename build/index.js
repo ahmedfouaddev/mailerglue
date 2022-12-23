@@ -726,7 +726,7 @@ const Onboarding = props => {
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mailerglue-bottom"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    href: "#",
+    href: a.skip_onboarding_url,
     className: "mailerglue-link-muted"
   }, "Skip onboarding")));
 };

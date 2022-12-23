@@ -101,17 +101,59 @@ class Types {
 					),
 					'description'         	=> __( 'This is where you can add new Lists to Mailer Glue plugin.', 'mailerglue' ),
 					'capability_type'		=> 'post',
-					'exclude_from_search' 	=> false,
+					'exclude_from_search' 	=> true,
 					'show_in_menu'        	=> false,
 					'hierarchical'        	=> false,
-					'supports'           	=> array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
+					'supports'           	=> array( '' ),
 					'taxonomies'        	=> array( '' ),
-					'public'              	=> true,
+					'public'              	=> false,
 					'show_ui'             	=> true,
-					'publicly_queryable'  	=> true,
-					'query_var'           	=> true,
+					'publicly_queryable'  	=> false,
+					'query_var'           	=> false,
 					'show_in_nav_menus'		=> true,
-					'show_in_admin_bar'   	=> true,
+					'show_in_admin_bar'   	=> false,
+					'show_in_rest'		  	=> true,
+				)
+			)
+		);
+
+		// Create user post type.
+		register_post_type(
+			'mailerglue_user',
+			apply_filters(
+				'mailerglue_user_post_type_template',
+				array(
+					'labels'             => array(
+						'name'                  => __( 'Subscribers', 'mailerglue' ),
+						'singular_name'         => __( 'Subscriber', 'mailerglue' ),
+						'menu_name'             => esc_html_x( 'All Lists', 'Admin menu name', 'mailerglue' ),
+						'add_new'               => __( 'Add Subscriber', 'mailerglue' ),
+						'add_new_item'          => __( 'Add New Subscriber', 'mailerglue' ),
+						'edit'                  => __( 'Edit', 'mailerglue' ),
+						'edit_item'             => __( 'Edit Subscriber', 'mailerglue' ),
+						'new_item'              => __( 'New Subscriber', 'mailerglue' ),
+						'view_item'             => __( 'View Subscriber', 'mailerglue' ),
+						'search_items'          => __( 'Search Subscribers', 'mailerglue' ),
+						'not_found'             => __( 'No Subscribers found', 'mailerglue' ),
+						'not_found_in_trash'    => __( 'No Subscribers found in trash', 'mailerglue' ),
+						'parent'                => __( 'Parent Subscriber', 'mailerglue' ),
+						'filter_items_list'     => __( 'Filter Subscribers', 'mailerglue' ),
+						'items_list_navigation' => __( 'Subscribers navigation', 'mailerglue' ),
+						'items_list'            => __( 'Subscribers list', 'mailerglue' ),
+					),
+					'description'         	=> __( 'This is where you can add new Subscribers to Mailer Glue plugin.', 'mailerglue' ),
+					'capability_type'		=> 'post',
+					'exclude_from_search' 	=> true,
+					'show_in_menu'        	=> false,
+					'hierarchical'        	=> false,
+					'supports'           	=> array( '' ),
+					'taxonomies'        	=> array( '' ),
+					'public'              	=> false,
+					'show_ui'             	=> true,
+					'publicly_queryable'  	=> false,
+					'query_var'           	=> false,
+					'show_in_nav_menus'		=> true,
+					'show_in_admin_bar'   	=> false,
 					'show_in_rest'		  	=> true,
 				)
 			)
@@ -123,6 +165,10 @@ class Types {
 	 * This force Gutenberg to be used for our post types.
 	 */
 	public function use_block_editor_for_post_type( $is_enabled, $post_type ) {
+
+		if ( in_array( $post_type, mailerglue_get_custom_post_types() ) ) {
+			return false;
+		}
 
 		if ( strstr( $post_type, 'mailerglue' ) ) {
 			return true;

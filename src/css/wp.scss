@@ -1,11 +1,23 @@
 .mailerglue-admin {
 
+	&.post-type-mailerglue_list.post-php,
+	&.post-type-mailerglue_list.post-new-php,
+	&.post-type-mailerglue_user.post-php,
+	&.post-type-mailerglue_user.post-new-php {
+		.wrap {
+			display: none;
+		}
+	}
+
 	#wpcontent {
 		padding: 0;
 	}
 
 	.wrap {
 		margin: 25px;
+		h1.wp-heading-inline {
+			padding: 0;
+		}
 	}
 
 }

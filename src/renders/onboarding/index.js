@@ -73,7 +73,7 @@ export const Onboarding = props => {
 			</div>
 
 			<div className="mailerglue-bottom">
-				<a href="#" className="mailerglue-link-muted">Skip onboarding</a>
+				<a href={ a.skip_onboarding_url } className="mailerglue-link-muted">Skip onboarding</a>
 			</div>
 		</>
 	);
