@@ -50,7 +50,9 @@ class Scripts {
 		$screen = get_current_screen();
 
 		if ( ! empty( $screen->id ) && ( strstr( $screen->id, 'edit-mailerglue' ) || strstr( $screen->id, 'mailerglue_' ) ) ) {
-			do_action( $screen->id );
+			if ( ! strstr( $screen->id, 'mailerglueapp' ) ) {
+				do_action( $screen->id );
+			}
 		}
 	}
 
@@ -84,6 +86,7 @@ class Scripts {
 		$args = array(
 			'api_url'				=> 'mailerglue/' . MAILERGLUE_API_VERSION,
 			'welcome'				=> $welcome,
+			'api_key'				=> $user->get_api_key(),
 		);
 
 		foreach( $options as $key => $value ) {

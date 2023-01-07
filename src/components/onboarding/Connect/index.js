@@ -44,6 +44,7 @@ const Connect = props => {
 			},
 		} ).then(
 			( response ) => {
+				console.log( response );
 				if ( ! response.success ) {
 					updateState( 'array', { sending: false, errors: { login: response.message }, access_token: '', loginPassword: '' } );
 					setEmailInputRef();

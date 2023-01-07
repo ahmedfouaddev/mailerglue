@@ -30,3 +30,10 @@ function mailerglue_get_custom_post_types() {
 
 	return apply_filters( 'mailerglue_get_custom_post_types', $post_types );
 }
+
+/**
+ * Output a title and decodes special-characters.
+ */
+function mailerglue_esc_title( $str ) {
+	return wp_specialchars_decode( html_entity_decode( $str ) );
+}

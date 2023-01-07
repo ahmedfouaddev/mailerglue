@@ -40,4 +40,14 @@ class User {
 		return $first_name ? $first_name : '';
 	}
 
+	/**
+	 * Get user's API key.
+	 */
+	public function get_api_key() {
+
+		$key = get_user_meta( $this->get_id(), 'mailerglue_api_key', true );
+
+		return $key;
+	}
+
 }

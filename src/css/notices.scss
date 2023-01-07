@@ -1,0 +1,23 @@
+.mailerglue-snackbar {
+    position: fixed;
+    bottom: 30px;
+    left: 193px;
+}
+
+.mailerglue-admin-ui {
+
+	.components-flex-block {
+		.components-notice {
+			margin: 0;
+		}
+	}
+
+	.components-notice {
+		margin: 0 0 32px;
+		&.is-error {
+			border-left-color: #cc1818;
+			background-color: #ffefef;
+		}
+	}
+
+}

@@ -1,7 +1,7 @@
 .mailerglue-ui {
 
 	.mailerglue-tabs {
-		margin: 25px;
+		margin: 32px;
 		background: #fff;
 		border: 1px solid #e2e4e7;
 		padding: 0;
@@ -32,11 +32,7 @@
 			padding: 15px 0 !important;
 			border-top: 3px solid transparent !important;
 			border-bottom: 3px solid transparent;
-			color: var(--mailerglue-primary-lighter-20);
 			box-shadow: none !important;
-			&:hover {
-				color: var(--mailerglue-primary);
-			}
 			&.mailerglue-active {
 			    color: #333 !important;
 				border-bottom: 3px solid #333 !important;

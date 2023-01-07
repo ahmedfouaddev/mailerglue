@@ -1,9 +1,13 @@
-.mailerglue-ui {
+.mailerglue-admin {
 
 	a {
-		color: var(--mailerglue-primary-lighter-10);
+		color: var(--wp-admin-theme-color);
+		text-decoration: none;
 		&:hover, &:focus {
-			color: var(--mailerglue-primary);
+			color: var(--wp-admin-theme-color-darker-10);
+		}
+		&:focus {
+			box-shadow: none;
 		}
 	}
 
@@ -18,13 +22,6 @@
 	}
 
 	.components-button.is-primary {
-		background: var(--mailerglue-primary-lighter-10);
-		&:hover:not(:disabled) {
-			background: var(--mailerglue-primary);
-		}
-		&:active:not(:disabled) {
-			background: var(--mailerglue-primary);
-		}
 		&:focus:not(:disabled) {
 			box-shadow: none;
 		}
@@ -34,9 +31,20 @@
 		&.is-busy,
 		&.is-busy:disabled,
 		&.is-busy[aria-disabled=true] {
-			background-image: linear-gradient(-45deg, var(--mailerglue-primary-lighter-10) 33%, var(--mailerglue-primary) 33%, var(--mailerglue-primary) 70%, var(--mailerglue-primary-lighter-10) 70%);
-			border-color: var(--mailerglue-primary-lighter-10);
 			color: #fff;
+		}
+	}
+
+	.wrap .page-title-action,
+	.wrap .button {
+		color: var(--wp-admin-theme-color);
+		border-color: var(--wp-admin-theme-color);
+		&:hover, &:focus {
+			color: var(--wp-admin-theme-color-darker-10);
+			border-color: var(--wp-admin-theme-color-darker-10);
+		}
+		&:focus {
+			box-shadow: 0 0 0 1px var(--wp-admin-theme-color-darker-10);
 		}
 	}
 

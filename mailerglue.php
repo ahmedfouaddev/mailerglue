@@ -102,7 +102,7 @@ final class MailerGlue {
 
 		// Remote App URL.
 		if ( ! defined( 'MAILERGLUE_REMOTE_APP' ) ) {
-			define( 'MAILERGLUE_REMOTE_APP', 'http://localhost/app/wp-json/v1' );
+			define( 'MAILERGLUE_REMOTE_APP', 'http://localhost/client/wp-json/v1' );
 		}
 
 	}

@@ -27,6 +27,8 @@ class Lists {
 		add_action( 'do_meta_boxes', array( $this, 'hide_publish_metabox' ), 10 );
 
 		add_filter( 'post_row_actions', array( $this, 'post_row_actions' ), 10, 2 );
+
+		add_filter( 'mailerglue_backend_args', array( $this, 'add_js_args' ), 50 );
 	}
 
 	/**
@@ -92,6 +94,23 @@ class Lists {
 		unset( $actions[ 'inline hide-if-no-js' ], $actions[ 'inline' ] );
 
 		return $actions;
+	}
+
+	/**
+	 * Add list meta to the JS args.
+	 */
+	public function add_js_args( $args = array() ) {
+		global $pagenow, $post_type, $post;
+
+		if ( $pagenow == 'post.php' && $post_type == 'mailerglue_list' && ! empty( $post->ID ) ) {
+			$list = new \MailerGlue\Lists;
+			$list->set( $post->ID );
+
+			$args[ 'list' ] = $list->get_meta();
+		}
+
+		return $args;
+
 	}
 
 }

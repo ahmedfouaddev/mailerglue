@@ -1,0 +1,32 @@
+.mailerglue-admin-ui {
+	h2 {
+		font-size: 1.4em;
+	}
+
+	h3 {
+		font-size: 1.2em;
+		margin: 0;
+	}
+
+	.components-base-control__label {
+		text-transform: none;
+		font-size: 13px;
+		font-weight: 400;
+	}
+
+	.components-base-control__help {
+		margin-top: 4px;
+	}
+
+	.components-text-control__input,
+	.components-textarea-control__input {
+		border-color: #d5d5d5;
+	}
+
+	.components-button {
+		&.is-primary {
+			min-width: 100px;
+			justify-content: center;
+		}
+	}
+}
