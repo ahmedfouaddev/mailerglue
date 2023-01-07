@@ -28,20 +28,47 @@ class Save_List {
 	 */
 	public function response( $request ) {
 
-		$data = json_decode( $request->get_body(), true );
+		// API.
+		$data 		= json_decode( $request->get_body(), true );
+		$headers 	= $request->get_headers();
 
-		$list_id = ! empty( $data[ 'id' ] ) ? absint( $data[ 'id' ] ) : 0;
+		$account_id 	= ! empty( $headers[ 'mailerglue_account_id' ] ) ? $headers[ 'mailerglue_account_id' ][ 0 ] : 0;
+		$access_token 	= ! empty( $headers[ 'mailerglue_access_token' ] ) ? $headers[ 'mailerglue_access_token' ][ 0 ] : '';
 
-		if ( empty( $list_id ) ) {
-			die();
+		$args = array(
+			'timeout' 		=> 10,
+			'headers' 		=> array(
+				'MailerGlue-Account-ID' 	=> $account_id,
+				'MailerGlue-Access-Token' 	=> $access_token,
+			),
+			'body'    		=> json_encode( $data ),
+			'data_format' 	=> 'body',
+		);
+
+		$result 	= wp_remote_post( MAILERGLUE_REMOTE_APP . '/save_list', $args );
+		$response 	= json_decode( wp_remote_retrieve_body( $result ), true );
+
+		// Success.
+		if ( ! empty( $response[ 'success' ] ) ) {
+			$list_id = ! empty( $data[ 'id' ] ) ? absint( $data[ 'id' ] ) : 0;
+
+			if ( empty( $list_id ) ) {
+				die();
+			}
+
+			$list = new \MailerGlue\Lists;
+
+			$list->set( $list_id );
+			$list->save( $data );
+
+			return rest_ensure_response( $response );
 		}
 
-		$list = new \MailerGlue\Lists;
+		// Error.
+		if ( empty( $response[ 'success' ] ) ) {
+			return rest_ensure_response( $response );
+		}
 
-		$list->set( $list_id );
-		$list->save( $data );
-
-		return rest_ensure_response( $data );
 	}
 
 }

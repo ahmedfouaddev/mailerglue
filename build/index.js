@@ -110,7 +110,8 @@ const ListDetails = props => {
     list,
     api_url,
     api_key,
-    welcome
+    welcome,
+    access_token
   } = mailerglue_backend;
   const {
     sizes,
@@ -121,6 +122,7 @@ const ListDetails = props => {
   } = _data_theme__WEBPACK_IMPORTED_MODULE_4__.theme;
   const [state, setState] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)({
     id: list.id,
+    global_id: list.global_id,
     title: list.title,
     description: list.description,
     isSaving: false,
@@ -140,31 +142,44 @@ const ListDetails = props => {
       method: 'post',
       data: state,
       headers: {
-        'MAILERGLUE-API-KEY': api_key
+        'MailerGlue-API-Key': api_key,
+        'MailerGlue-Access-Token': access_token.token,
+        'MailerGlue-Account-ID': access_token.id
       }
     }).then(response => {
-      setState(prevValues => {
-        return {
-          ...prevValues,
-          isSaving: false
-        };
-      });
-      setAttributes(prevValues => {
-        return {
-          ...prevValues,
-          title: response.title,
-          showSnackbar: true,
-          snackbarMessage: 'List saved successfully.'
-        };
-      });
-      setTimeout(() => {
+      console.log(response);
+      if (!response.success) {
+        setState(prevValues => {
+          return {
+            ...prevValues,
+            isSaving: false,
+            saveError: response.message
+          };
+        });
+      } else {
+        setState(prevValues => {
+          return {
+            ...prevValues,
+            isSaving: false
+          };
+        });
         setAttributes(prevValues => {
           return {
             ...prevValues,
-            showSnackbar: false
+            title: response.title,
+            showSnackbar: true,
+            snackbarMessage: 'List saved successfully.'
           };
         });
-      }, 1500);
+        setTimeout(() => {
+          setAttributes(prevValues => {
+            return {
+              ...prevValues,
+              showSnackbar: false
+            };
+          });
+        }, 1500);
+      }
     }, error => {
       if (error.message) {
         setState(prevValues => {

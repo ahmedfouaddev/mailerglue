@@ -28,9 +28,9 @@ class Save_Basic_Settings {
 	 */
 	public function response( $request ) {
 
-		$data = json_decode( $request->get_body(), true );
-
-		$headers = $request->get_headers();
+		// API.
+		$data 		= json_decode( $request->get_body(), true );
+		$headers 	= $request->get_headers();
 
 		$account_id 	= ! empty( $headers[ 'mailerglue_account_id' ] ) ? $headers[ 'mailerglue_account_id' ][ 0 ] : 0;
 		$access_token 	= ! empty( $headers[ 'mailerglue_access_token' ] ) ? $headers[ 'mailerglue_access_token' ][ 0 ] : '';
@@ -55,13 +55,20 @@ class Save_Basic_Settings {
 		$result 	= wp_remote_post( MAILERGLUE_REMOTE_APP . '/save_basic_settings', $args );
 		$response 	= json_decode( wp_remote_retrieve_body( $result ), true );
 
+		// Success.
 		if ( ! empty( $response[ 'success' ] ) ) {
 
 			$options = new \MailerGlue\Options;
 			$options->update( 'data', $data );
+
+			return rest_ensure_response( $response );
 		}
 
-		return rest_ensure_response( $response );
+		// Error.
+		if ( empty( $response[ 'success' ] ) ) {
+			return rest_ensure_response( $response );
+		}
+
 	}
 
 }

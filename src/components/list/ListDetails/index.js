@@ -24,12 +24,13 @@ const ListDetails = props => {
 
 	const { attributes, setAttributes } = props;
 
-	const { list, api_url, api_key, welcome } = mailerglue_backend;
+	const { list, api_url, api_key, welcome, access_token } = mailerglue_backend;
 
 	const { sizes, fontweight, colors, gap, gaps } = theme;
 
 	const [state, setState] = useState( {
 		id: list.id,
+		global_id: list.global_id,
 		title: list.title,
 		description: list.description,
 		isSaving: false,
@@ -47,16 +48,24 @@ const ListDetails = props => {
 			method: 'post',
 			data: state,
 			headers: {
-				'MAILERGLUE-API-KEY' : api_key,
+				'MailerGlue-API-Key' : api_key,
+				'MailerGlue-Access-Token' : access_token.token,
+				'MailerGlue-Account-ID' : access_token.id,
 			},
 		} ).then(
 			( response ) => {
-				setState( prevValues => { return { ...prevValues, isSaving: false } } );
-				setAttributes( prevValues => { return { ...prevValues, title: response.title, showSnackbar: true, snackbarMessage: 'List saved successfully.' } } );
 
-				setTimeout( () => {
-					setAttributes( prevValues => { return { ...prevValues, showSnackbar: false } } );
-				}, 1500 );
+				console.log( response );
+				if ( ! response.success ) {
+					setState( prevValues => { return { ...prevValues, isSaving: false, saveError: response.message } } );
+				} else {
+					setState( prevValues => { return { ...prevValues, isSaving: false } } );
+					setAttributes( prevValues => { return { ...prevValues, title: response.title, showSnackbar: true, snackbarMessage: 'List saved successfully.' } } );
+
+					setTimeout( () => {
+						setAttributes( prevValues => { return { ...prevValues, showSnackbar: false } } );
+					}, 1500 );
+				}
 			},
 			( error ) => {
 				if ( error.message ) {
